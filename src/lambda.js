@@ -1,11 +1,9 @@
-import createApp from 'ringcentral-chatbot/dist/apps'
-import { createAsyncProxy } from 'ringcentral-chatbot/dist/lambda'
 import serverlessHTTP from 'serverless-http'
+import { createAsyncProxy } from 'ringcentral-chatbot/dist/lambda'
 import axios from 'axios'
 
-import { handle } from './eventHandler'
+import app from './app'
 
-const app = createApp(handle)
 module.exports.app = serverlessHTTP(app)
 
 module.exports.proxy = createAsyncProxy('app')
