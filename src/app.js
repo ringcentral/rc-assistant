@@ -24,7 +24,7 @@ app.get('/rc/oauth', async (req, res) => {
   const bot = await Bot.findByPk(botId)
   const r = await rc.get('/restapi/v1.0/account/~/extension/~')
   await bot.sendMessage(groupId, { text: `I have been authorized to fetch data on behalf of the following RingCentral extension:
-${formatObj(R.pick(['id', 'extensionNumber', 'type', 'name', 'contact', 'account', 'uri'], r.data))}` })
+${formatObj(R.pick(['id', 'extensionNumber', 'type', 'name', 'account', 'uri'], r.data))}` })
   res.send('<!doctype><html><body><script>close()</script></body></html>')
 })
 
