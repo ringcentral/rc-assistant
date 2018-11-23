@@ -1,0 +1,808 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "GlipBot",
+    "version": "1",
+    "intents": [
+      {
+        "name": "GetServices",
+        "version": "5",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Show me {ServiceType} services",
+          "list {ServiceType} services",
+          "what are the services {ServiceType} to me",
+          "get services",
+          "list services",
+          "list services {ServiceType} to me",
+          "get services {ServiceType} to me"
+        ],
+        "slots": [
+          {
+            "name": "ServiceType",
+            "slotConstraint": "Required",
+            "slotType": "ServiceTypes",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to view **available** or **unavailable** services?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": [
+              "{ServiceType} services",
+              "show me {ServiceType} services",
+              "I would like to see {ServiceType} services",
+              "list {ServiceType} services"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "EditUserStatus",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Edit my status",
+          "Edit my user status",
+          "update user status",
+          "change my status",
+          "edit status",
+          "set my status",
+          "Change my user status to {UserStatus}",
+          "set my status to {UserStatus}",
+          "change user status to {UserStatus}",
+          "change user status",
+          "set my user status to {UserStatus}"
+        ],
+        "slots": [
+          {
+            "name": "UserStatus",
+            "slotConstraint": "Required",
+            "slotType": "UserStatusTypes",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Do you want to update your status to **Available**, **Busy** or **Offline**? "
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": [
+              "Set it to {UserStatus}",
+              "Update it to {UserStatus}",
+              "change it to {UserStatus}"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CompanyBillingPlan",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "get company billing plan",
+          "show me company billing plan",
+          "company billing plan",
+          "view company billing plan"
+        ],
+        "slots": []
+      },
+      {
+        "name": "CompanyTimeZone",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "get company time zone",
+          "show me company time-zone",
+          "view company time zone",
+          "company time-zone"
+        ],
+        "slots": []
+      },
+      {
+        "name": "CompanyGreeting",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "get company greeting",
+          "show company greetings",
+          "view company greeting",
+          "company greeting"
+        ],
+        "slots": []
+      },
+      {
+        "name": "BusinessHours",
+        "version": "11",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "show me business hours for {HoursFor}",
+          "view business hours",
+          "I would like to see business hours for {HoursFor}",
+          "show me {HoursFor} hours",
+          "what are {HoursFor} office hours ",
+          "show me business hours",
+          "get {HoursFor} business hours",
+          "get me {HoursFor} business hours",
+          "list {HoursFor} business hours",
+          "get {HoursFor} operating hours",
+          "get {HoursFor} working hours",
+          "get business hours",
+          "list business hours",
+          "show business hours",
+          "view {HoursFor} business hours",
+          "show me {HoursFor} business hours"
+        ],
+        "slots": [
+          {
+            "name": "HoursFor",
+            "slotConstraint": "Required",
+            "slotType": "BusinessHoursTypes",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to view your **personal business hours** or the **company business hours**? "
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": [
+              "I would like to see business hours for {HoursFor}",
+              "{HoursFor} business hours",
+              "business hours for {HoursFor}"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "EditDnDStatus",
+        "version": "8",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Edit DnD status",
+          "Edit Do not Disturb Status",
+          "Change DND status",
+          "update DND status",
+          "{DnDStatus}",
+          "Set do not disturb status to {DnDStatus}",
+          "Change DND status to {DnDStatus}",
+          "{DnDStatus} right now"
+        ],
+        "slots": [
+          {
+            "name": "DnDStatus",
+            "slotConstraint": "Required",
+            "slotType": "DnDStatusTypes",
+            "slotTypeVersion": "5",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Do you want to set you Do Not Disturb to **Take All Calls**, **Do Not Accept Any Calls**, **Take Department Calls Only** or **Do Not Accept Any Calls**?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": [
+              "set it to {DnDStatus}",
+              "change it to {DnDStatus}"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "NotificationSettings",
+        "version": "7",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Show my notification settings",
+          "show me notification settings",
+          "list alert settings",
+          "get notification settings",
+          "alert settings",
+          "notification settings",
+          "notification settings for {AlertsFor}",
+          "get notification for {AlertsFor}",
+          "list notification settings for {AlertsFor}",
+          "show me notification settings for {AlertsFor}",
+          "alert settings for {AlertsFor}",
+          "get my notification settings",
+          "list my notification settings"
+        ],
+        "slots": [
+          {
+            "name": "AlertsFor",
+            "slotConstraint": "Required",
+            "slotType": "NotificationsFor",
+            "slotTypeVersion": "2",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to view notification settings for **voicemail**, **in-fax**, **out-fax**, **in-text** or **missed calls**?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": []
+          }
+        ]
+      },
+      {
+        "name": "EditBusinessHours",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "edit my business hours",
+          "edit personal business hours",
+          "update my business hours",
+          "change my office hours",
+          "change my working hours",
+          "edit my operating hours",
+          "edit my hours of operation"
+        ],
+        "slots": []
+      },
+      {
+        "name": "EditPersonalInfo",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "edit personal info",
+          "edit personal information",
+          "update my personal info",
+          "update personal information",
+          "change my personal information",
+          "change personal info",
+          "edit my info"
+        ],
+        "slots": []
+      },
+      {
+        "name": "PersonalInfo",
+        "version": "4",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "show me my personal info",
+          "get my personal info",
+          "my personal details",
+          "show me my personal details",
+          "personal info",
+          "view personal info",
+          "view my personal info"
+        ],
+        "slots": []
+      },
+      {
+        "name": "Help",
+        "version": "27",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "help",
+          "help me with {FeatureGroup}",
+          "show me commands",
+          "show me commands for {FeatureGroup}",
+          "list commands for {FeatureGroup}",
+          "Can you help me",
+          "Can you help me with {FeatureGroup}",
+          "would you be able to help me with {FeatureGroup}",
+          "help me",
+          "I need help with {FeatureGroup}",
+          "show me features for {FeatureGroup}",
+          "Can you show me features for {FeatureGroup}",
+          "I need help",
+          "help {FeatureGroup}"
+        ],
+        "slots": [
+          {
+            "name": "FeatureGroup",
+            "slotConstraint": "Required",
+            "slotType": "CommandGroups",
+            "slotTypeVersion": "4",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "I can help you with the following:\\n* **Company Information**\\n* **Notifications Settings**\\n* **Personal Information**\\n* **Presence information**\\n* **Caller ID setting**\\nWhat do you need help with?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": [
+              "I need help with {FeatureGroup}",
+              "can you help me with {FeatureGroup}",
+              "viewing {FeatureGroup}",
+              "editing {FeatureGroup}"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CompanyServicePlan",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "view company service plan",
+          "company service plan",
+          "show me company service plan",
+          "get service plan for the company"
+        ],
+        "slots": []
+      },
+      {
+        "name": "PresenceInfo",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "get presence info",
+          "get status info",
+          "view status info",
+          "show status info",
+          "show my status",
+          "show my presence info",
+          "list presence info",
+          "show me presence info",
+          "get my presence info",
+          "view presence information",
+          "view dnd status",
+          "view user status",
+          "show my dnd status",
+          "show my do not disturb status"
+        ],
+        "slots": []
+      },
+      {
+        "name": "EditNotificationSettings",
+        "version": "11",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "edit notification settings",
+          "{Action} {AlertType} notifications for {AlertsFor}",
+          "update notification settings",
+          "update alert settings",
+          "edit alert settings",
+          "edit notification settings for {AlertsFor}",
+          "{Action} {AlertType} notifications",
+          "{Action} notifications for {AlertsFor}",
+          "{Action} notifications"
+        ],
+        "slots": [
+          {
+            "name": "Action",
+            "slotConstraint": "Required",
+            "slotType": "NotificationActionTypes",
+            "slotTypeVersion": "2",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to **enable** or **disable** **{AlertType}** notifications for **{AlertsFor}**?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 3,
+            "sampleUtterances": []
+          },
+          {
+            "name": "AlertsFor",
+            "slotConstraint": "Required",
+            "slotType": "NotificationsFor",
+            "slotTypeVersion": "2",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to update the notification settings for **voicemail**, **in-fax**, **out-fax**, **in-texts** or **missed calls**?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to **{Action} {AlertType}** notifications for **voicemail**, **in-fax**, **out-fax**, **in-texts** or **missed calls**? "
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to **{Action}** notifications for  **voicemail**, **in-fax**, **out-fax**, **in-texts** or **missed calls**? "
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 1,
+            "sampleUtterances": []
+          },
+          {
+            "name": "AlertType",
+            "slotConstraint": "Required",
+            "slotType": "NotificationTypes",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to edit **email** or **sms** notifications for **{AlertsFor}**?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to **{Action}** **email** or **sms** notifications for **{AlertsFor}**? "
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+            },
+            "priority": 2,
+            "sampleUtterances": []
+          }
+        ]
+      },
+      {
+        "name": "CompanyInfo",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "show me company info",
+          "show me company information",
+          "view company information",
+          "I would like to view my company info",
+          "show me company details",
+          "view company details"
+        ],
+        "slots": []
+      },
+      {
+        "name": "CallerID",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "get caller ID settings",
+          "show me caller ID settings",
+          "list caller id settings",
+          "caller ID settings",
+          "caller ID info",
+          "show me callerID info"
+        ],
+        "slots": []
+      },
+      {
+        "name": "EditCallerID",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "edit caller ID settings",
+          "edit caller Id info",
+          "update caller ID info",
+          "change caller ID settings"
+        ],
+        "slots": []
+      },
+      {
+        "name": "Hello",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Hello",
+          "Hi",
+          "Hay",
+          "Hi there"
+        ],
+        "slots": []
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "DnDStatusTypes",
+        "version": "5",
+        "enumerationValues": [
+          {
+            "value": "TakeAllCalls",
+            "synonyms": [
+              "Take all calls",
+              "accept all calls",
+              "allow all calls",
+              "I would like to accept all calls"
+            ]
+          },
+          {
+            "value": "DoNotAcceptAnyCalls",
+            "synonyms": [
+              "Do Not Accept any call",
+              "Do not take any calls",
+              "no calls at this time",
+              "do not take any calls",
+              "don't take any calls",
+              "I don't want to receive any calls"
+            ]
+          },
+          {
+            "value": "TakeDepartmentCallsOnly",
+            "synonyms": [
+              "Take Department Calls only",
+              "only department calls",
+              "just department calls",
+              "just take department calls"
+            ]
+          },
+          {
+            "value": "DoNotAcceptDepartmentCalls",
+            "synonyms": [
+              "Do not Accept Department Calls",
+              "Do not take department calls",
+              "don't take department calls"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "UserStatusTypes",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Busy",
+            "synonyms": []
+          },
+          {
+            "value": "Offline",
+            "synonyms": []
+          },
+          {
+            "value": "Available",
+            "synonyms": [
+              "free"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "NotificationTypes",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "sms",
+            "synonyms": []
+          },
+          {
+            "value": "email",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "Lists all the command groups for the glip bot",
+        "name": "CommandGroups",
+        "version": "4",
+        "enumerationValues": [
+          {
+            "value": "company info",
+            "synonyms": [
+              "company information"
+            ]
+          },
+          {
+            "value": "notification settings",
+            "synonyms": [
+              "notification information",
+              "notifications"
+            ]
+          },
+          {
+            "value": "personal info",
+            "synonyms": [
+              "personal info",
+              "personal settings",
+              "personal information"
+            ]
+          },
+          {
+            "value": "caller ID info",
+            "synonyms": [
+              "caller ID settings",
+              "caller ID info",
+              "caller ID"
+            ]
+          },
+          {
+            "value": "presence info",
+            "synonyms": [
+              "presence information, presence info, presence settings",
+              "dnd",
+              "DnD",
+              "DND",
+              "user status",
+              "do not disturb"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "ServiceTypes",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "unavailable",
+            "synonyms": [
+              "disabled, inactive, inaccessible"
+            ]
+          },
+          {
+            "value": "available",
+            "synonyms": [
+              "active, accessible",
+              "enabled"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "NotificationsFor",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "voicemail",
+            "synonyms": [
+              "voicemails"
+            ]
+          },
+          {
+            "value": "in-fax",
+            "synonyms": [
+              "incoming fax",
+              "in fax"
+            ]
+          },
+          {
+            "value": "in-text",
+            "synonyms": [
+              "incoming text",
+              "in text"
+            ]
+          },
+          {
+            "value": "missed call",
+            "synonyms": [
+              "missed calls"
+            ]
+          },
+          {
+            "value": "out-fax",
+            "synonyms": [
+              "outgoing fax",
+              "out fax"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "personal or company business hours",
+        "name": "BusinessHoursTypes",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "personal",
+            "synonyms": [
+              "my"
+            ]
+          },
+          {
+            "value": "company",
+            "synonyms": [
+              "office, organization, institution ,enterprise"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "NotificationActionTypes",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "enable",
+            "synonyms": [
+              "send",
+              "receive",
+              "start"
+            ]
+          },
+          {
+            "value": "disable",
+            "synonyms": [
+              "stop",
+              "don't send",
+              "don't receive"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      }
+    ],
+    "voiceId": "0",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 600,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I did not understand, can you rephrase that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Please try again."
+        }
+      ]
+    }
+  }
+}
