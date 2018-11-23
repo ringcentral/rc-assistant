@@ -23,7 +23,7 @@ const handleMessage4Bot = async event => {
   if (!service) {
     const authorizeUri = rc.authorizeUri(process.env.RINGCENTRAL_CHATBOT_SERVER + '/rc/oauth',
       { state: `${group.id}:${bot.id}` })
-    await bot.sendMessage(group.id, { text: `Please [authorize me to access your RingCentral data](${authorizeUri}).` })
+    await bot.sendMessage(group.id, { text: `Please [click here](${authorizeUri}) to authorize me to access your RingCentral data.` })
     return
   }
   await bot.sendMessage(group.id, { text: 'Hi, I am here' })

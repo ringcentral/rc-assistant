@@ -1,5 +1,6 @@
 import createApp from 'ringcentral-chatbot/dist/apps'
 import { Service, Bot } from 'ringcentral-chatbot/dist/models'
+import * as R from 'ramda'
 
 import { handle } from './eventHandler'
 import rc from './ringcentral'
@@ -20,7 +21,9 @@ app.get('/rc/oauth', async (req, res) => {
     await Service.create({ ...query, data })
   }
   const bot = await Bot.findByPk(botId)
-  await bot.sendMessage(groupId, { text: `I have been authorized to access RingCentral extension #${data.id}` })
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+  await bot.sendMessage(groupId, { text: `I have been authorized to fetch data on behalf of the following RingCentral extension:
+    [code]${JSON.stringify(R.pick(['id', 'extensionNumber', 'type', 'name', 'contact', 'account', 'uri'], r.data), null, 2)}[/code]` })
   res.send('<!doctype><html><body><script>close()</script></body></html>')
 })
 
