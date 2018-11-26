@@ -697,7 +697,7 @@ archiver-utils@^1.3.0:
 
 archiver@^1.1.0:
   version "1.3.0"
-  resolved "https://registry.yarnpkg.com/archiver/-/archiver-1.3.0.tgz#4f2194d6d8f99df3f531e6881f14f15d55faaf22"
+  resolved "http://registry.npmjs.org/archiver/-/archiver-1.3.0.tgz#4f2194d6d8f99df3f531e6881f14f15d55faaf22"
   dependencies:
     archiver-utils "^1.3.0"
     async "^2.0.0"
@@ -821,9 +821,9 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-aws-sdk@^2.228.0, aws-sdk@^2.358.0:
-  version "2.361.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.361.0.tgz#f51619bde8d642c679428c09466b06814c491901"
+aws-sdk@^2.228.0, aws-sdk@^2.362.0:
+  version "2.362.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.362.0.tgz#42246bd0ee4fdb82f40138bf2a7d85b6343b1f77"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -4642,9 +4642,13 @@ q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 
-qs@6.5.2, qs@^6.5.1, qs@~6.5.2:
+qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+
+qs@^6.5.1:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.6.0.tgz#a99c0f69a8d26bf7ef012f871cdabb0aee4424c2"
 
 querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
@@ -4973,21 +4977,21 @@ rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@~2.6.2:
   dependencies:
     glob "^7.0.5"
 
-ringcentral-chatbot@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/ringcentral-chatbot/-/ringcentral-chatbot-0.3.7.tgz#5b02f7c48095eeba52d20dcfb048f12cdcc6cbb7"
+ringcentral-chatbot@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/ringcentral-chatbot/-/ringcentral-chatbot-0.3.9.tgz#1a45df9ce141923dedc7e21dfaa4abf6bb333fe5"
   dependencies:
-    aws-sdk "^2.358.0"
+    aws-sdk "^2.362.0"
     axios "^0.18.0"
     express "^4.16.4"
     form-data "^2.3.3"
-    ringcentral-js-concise "^0.7.1"
+    ringcentral-js-concise "^0.7.2"
     sequelize "^4.41.2"
     timeout-as-promise "^1.0.0"
 
-ringcentral-js-concise@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.7.1.tgz#2b596df7d4b0ee645ac48731d847d73564752935"
+ringcentral-js-concise@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.7.2.tgz#ae7a6c9da243c3f37924739e0ed08bca371821b5"
   dependencies:
     axios "^0.18.0"
     js-base64 "^2.4.9"
