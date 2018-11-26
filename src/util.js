@@ -13,7 +13,7 @@ export const toPairs = (val, path = []) => {
 
 export const formatObj = obj => {
   return R.pipe(
-    R.map(({ path, val }) => `* ${path.join(' ')}: ${val}`),
+    R.map(({ path, val }) => `**${path.join(' ')}**: ${val}`),
     R.join('\n')
   )(toPairs(obj))
 }

@@ -30,11 +30,11 @@ describe('util', () => {
   test('formatObj', () => {
     expect(formatObj({
       hello: 'world'
-    })).toBe('* hello: world')
+    })).toBe('**hello**: world')
     expect(formatObj({
       hello: 'world', aaa: 'bbb'
-    })).toBe(`* hello: world
-* aaa: bbb`)
+    })).toBe(`**hello**: world
+**aaa**: bbb`)
     expect(formatObj({
       'contact': {
         'firstName': 'XM',
@@ -42,7 +42,7 @@ describe('util', () => {
           'city': 'San Mateo'
         }
       }
-    })).toBe(`* contact firstName: XM
-* contact businessAddress city: San Mateo`)
+    })).toBe(`**contact firstName**: XM
+**contact businessAddress city**: San Mateo`)
   })
 })
