@@ -1,5 +1,7 @@
 import * as R from 'ramda'
 
+import rc from './ringcentral'
+
 export const toPairs = (val, path = []) => {
   if (val === null || typeof val !== 'object') {
     return [{ path, val }]
@@ -16,4 +18,12 @@ export const formatObj = obj => {
     R.map(({ path, val }) => `**${path.join(' ')}**: ${val}`),
     R.join('\n')
   )(toPairs(obj))
+}
+
+export const sendAuthorizationLink = async (group, bot) => {
+  const authorizeUri = rc.authorizeUri(process.env.RINGCENTRAL_CHATBOT_SERVER + '/rc/oauth',
+    { state: `${group.id}:${bot.id}` })
+  await bot.sendMessage(group.id, {
+    text: `Please [click here](${authorizeUri}) to authorize me to access your RingCentral data.`
+  })
 }

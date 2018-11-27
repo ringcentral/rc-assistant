@@ -1,24 +1,35 @@
 import * as R from 'ramda'
 
 import rc from './ringcentral'
-import { formatObj } from './util'
+import { formatObj, sendAuthorizationLink } from './util'
 
-export const handleIntent = async (intent, event) => {
+export const handleIntent = async (intent, event, service) => {
   console.log(JSON.stringify(intent, null, 2))
   const { bot, group } = event
-  switch (intent.intentName) {
-    case 'PresenceInfo':
-      await handlePresenceInfo(intent, event)
-      break
-    case null:
-      await bot.sendMessage(group.id, { text: intent.message })
-      break
-    default:
-      throw new Error(`Unhandled intent: ${intent.intentName}`)
+  try {
+    switch (intent.intentName) {
+      case 'PresenceInfo':
+        await handlePresenceInfo(intent, event, service)
+        break
+      case null:
+        await bot.sendMessage(group.id, { text: intent.message })
+        break
+      default:
+        throw new Error(`Unhandled intent: ${intent.intentName}`)
+    }
+  } catch (e) {
+    if (e.status === 400 && /token/i.test(e.data.error_description)) { // refresh token invalid
+      await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
+      await sendAuthorizationLink(group, bot)
+      await service.destroy()
+      return
+    }
+    throw e
   }
 }
 
-const handlePresenceInfo = async (intent, event) => {
+const handlePresenceInfo = async (intent, event, service) => {
+  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~/extension/~/presence', {
     params: {
       detailedTelephonyState: true,
