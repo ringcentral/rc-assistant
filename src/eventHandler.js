@@ -15,16 +15,32 @@ export const handle = async event => {
   }
 }
 
+const sendAuthorizationLink = async (group, bot) => {
+  const authorizeUri = rc.authorizeUri(process.env.RINGCENTRAL_CHATBOT_SERVER + '/rc/oauth',
+    { state: `${group.id}:${bot.id}` })
+  await bot.sendMessage(group.id, {
+    text: `Please [click here](${authorizeUri}) to authorize me to access your RingCentral data.`
+  })
+}
+
 const handleMessage4Bot = async event => {
   const { group, bot } = event
   const service = await Service.findOne({ where: {
     name: 'RingCentral', botId: bot.id, groupId: group.id
   } })
   if (!service) {
-    const authorizeUri = rc.authorizeUri(process.env.RINGCENTRAL_CHATBOT_SERVER + '/rc/oauth',
-      { state: `${group.id}:${bot.id}` })
-    await bot.sendMessage(group.id, { text: `Please [click here](${authorizeUri}) to authorize me to access your RingCentral data.` })
+    await sendAuthorizationLink(group, bot)
     return
   }
-  await bot.sendMessage(group.id, { text: 'Hi, I am here' })
+  try {
+    // fetch data onbehalf of user
+  } catch (e) {
+    if (e.status === 400) { // refresh toke expired
+      await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
+      await sendAuthorizationLink(group, bot)
+      await service.destroy()
+      return
+    }
+    throw e
+  }
 }
