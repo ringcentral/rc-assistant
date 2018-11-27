@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "scripts": {
-    "dev": "node -r @babel/register -r dotenv/config src/express.js",
+    "dev": "~/.okta/aws-token && node -r @babel/register -r dotenv/config src/express.js",
     "ngrok": "./node_modules/.bin/ngrok http -region eu 3000",
     "build": "rm -rf dist && babel src --out-dir dist --source-maps",
     "deploy": "yarn test && yarn build && sls deploy",
@@ -25,6 +25,7 @@
     "dotenv": "^6.1.0",
     "jest": "^23.6.0",
     "ngrok": "^3.1.0",
+    "sequelize-cli": "^5.3.0",
     "serverless": "^1.33.2",
     "sqlite3": "^4.0.4",
     "standard": "^12.0.1",

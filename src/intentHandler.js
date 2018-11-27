@@ -4,14 +4,17 @@ import rc from './ringcentral'
 import { formatObj } from './util'
 
 export const handleIntent = async (intent, event) => {
+  console.log(JSON.stringify(intent, null, 2))
+  const { bot, group } = event
   switch (intent.intentName) {
     case 'PresenceInfo':
       await handlePresenceInfo(intent, event)
       break
-    default:
-      const { bot, group } = event
-      await bot.sendMessage(group.id, { text: "Sorry, I don't understand" })
+    case null:
+      await bot.sendMessage(group.id, { text: intent.message })
       break
+    default:
+      throw new Error(`Unhandled intent: ${intent.intentName}`)
   }
 }
 
