@@ -35,7 +35,7 @@ const handleMessage4Bot = async event => {
   try {
     // fetch data onbehalf of user
   } catch (e) {
-    if (e.status === 400) { // refresh toke expired
+    if (e.status === 400 && /token/i.test(e.data.error_description)) { // refresh token invalid
       await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
       await sendAuthorizationLink(group, bot)
       await service.destroy()
