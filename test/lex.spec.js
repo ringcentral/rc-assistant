@@ -11,7 +11,10 @@ describe('AWS Lex', () => {
       botAlias: 'GlipBot',
       botName: 'GlipBot',
       inputText: 'presence info',
-      userId: '123456'
+      userId: '123456',
+      sessionAttributes: {
+        hello: '111'
+      }
     }).promise()
     expect(data).toEqual({
       intentName: 'PresenceInfo',
@@ -19,7 +22,10 @@ describe('AWS Lex', () => {
       message: null,
       messageFormat: null,
       dialogState: 'ReadyForFulfillment',
-      slotToElicit: null
+      slotToElicit: null,
+      sessionAttributes: {
+        hello: '111'
+      }
     })
   })
 })
