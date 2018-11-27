@@ -1,6 +1,10 @@
 import { Service } from 'ringcentral-chatbot/dist/models'
+import Lexruntime from 'aws-sdk/clients/lexruntime'
 
 import rc from './ringcentral'
+import { handleIntent } from './intentHandler'
+
+const lexruntime = new Lexruntime({ region: process.env.AWS_REGION })
 
 export const handle = async event => {
   console.log(event.type, 'event')
@@ -24,7 +28,7 @@ const sendAuthorizationLink = async (group, bot) => {
 }
 
 const handleMessage4Bot = async event => {
-  const { group, bot } = event
+  const { group, bot, text, userId } = event
   const service = await Service.findOne({ where: {
     name: 'RingCentral', botId: bot.id, groupId: group.id
   } })
@@ -32,8 +36,14 @@ const handleMessage4Bot = async event => {
     await sendAuthorizationLink(group, bot)
     return
   }
+  const intent = await lexruntime.postText({
+    botAlias: process.env.AWS_LEX_BOT_NAME,
+    botName: process.env.AWS_LEX_BOT_ALIAS,
+    inputText: text,
+    userId: `${group.id}:${bot.id}:${userId}`
+  }).promise()
   try {
-    // fetch data onbehalf of user
+    await handleIntent(intent, event)
   } catch (e) {
     if (e.status === 400 && /token/i.test(e.data.error_description)) { // refresh token invalid
       await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
