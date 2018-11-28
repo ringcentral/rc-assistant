@@ -66,6 +66,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'GetServices':
         await handleGetServices(intent, event, service)
         break
+      case 'CallerID':
+        await handleCallerID(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -286,6 +289,30 @@ const handleGetServices = async (intent, event, service) => {
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
+}
+
+const handleCallerID = async (intent, event, service) => {
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~/caller-id')
+  const fields = [{ 'title': 'Feature', 'style': 'Short', 'value': '' }, { 'title': 'Caller ID', 'style': 'Short', 'value': '' }]
+  console.log(r.data)
+  r.data.byFeature.filter(f => !R.isNil(f.callerId) && !R.isEmpty(f.callerId)).forEach(({ feature, callerId }) => {
+    fields.push({ 'title': ' ', 'value': feature, 'style': 'Short' })
+    if (callerId['type'] === 'PhoneNumber') {
+      fields.push({ 'title': ' ', 'value': callerId['phoneInfo']['phoneNumber'], 'style': 'Short' })
+    } else {
+      fields.push({ 'title': ' ', 'value': ' ', 'style': 'Short' })
+    }
+  })
+  const { bot, group } = event
+  await bot.sendMessage(group.id, {
+    text: '',
+    'attachments': [{
+      'type': 'Card',
+      'fallback': "The attachment isn't supported.",
+      'color': '#9C1A22',
+      'fields': fields
+    }]
+  })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
