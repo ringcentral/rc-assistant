@@ -50,6 +50,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'PersonalInfo':
         await handlePersonalInfo(intent, event, service)
         break
+      case 'BusinessHours':
+        await handleBusinessHours(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -219,6 +222,47 @@ const handlePersonalInfo = async (intent, event, service) => {
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handleBusinessHours = async (intent, event, service) => {
+  rc.token(service.data.token)
+  let r
+  if (intent.slots.HoursFor === 'personal') {
+    r = await rc.get('/restapi/v1.0/account/~/extension/~/business-hours')
+  } else if (intent.slots.HoursFor === 'company') {
+    r = await rc.get('/restapi/v1.0/account/~/business-hours')
+  }
+  console.log(r.data)
+  let table = '|**Day**|**From**|**To**|\n'
+  const schedule = r.data['schedule']
+  if (R.isEmpty(schedule)) {
+    table = 'Provide 24/7 service'
+  } else {
+    const weeklyRanges = schedule['weeklyRanges']
+    if ('monday' in weeklyRanges) {
+      table = table + '|Monday|' + weeklyRanges['monday'][0]['from'] + '|' + weeklyRanges['monday'][0]['to'] + '|\n'
+    }
+    if ('tuesday' in weeklyRanges) {
+      table = table + '|Tuesday|' + weeklyRanges['tuesday'][0]['from'] + '|' + weeklyRanges['tuesday'][0]['to'] + '|\n'
+    }
+    if ('wednesday' in weeklyRanges) {
+      table = table + '|Wednesday|' + weeklyRanges['wednesday'][0]['from'] + '|' + weeklyRanges['wednesday'][0]['to'] + '|\n'
+    }
+    if ('thursday' in weeklyRanges) {
+      table = table + '|Thursday|' + weeklyRanges['thursday'][0]['from'] + '|' + weeklyRanges['thursday'][0]['to'] + '|\n'
+    }
+    if ('friday' in weeklyRanges) {
+      table = table + '|Friday|' + weeklyRanges['friday'][0]['from'] + '|' + weeklyRanges['friday'][0]['to'] + '|\n'
+    }
+    if ('saturday' in weeklyRanges) {
+      table = table + '|Saturday|' + weeklyRanges['saturday'][0]['from'] + '|' + weeklyRanges['saturday'][0]['to'] + '|\n'
+    }
+    if ('sunday' in weeklyRanges) {
+      table = table + '|Sunday|' + weeklyRanges['sunday'][0]['from'] + '|' + weeklyRanges['sunday'][0]['to'] + '|\n'
+    }
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: table })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
