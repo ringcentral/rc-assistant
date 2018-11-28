@@ -5199,9 +5199,9 @@ ringcentral-js-concise@^0.7.2:
     js-base64 "^2.4.9"
     urijs "^1.19.1"
 
-ringcentral-js-concise@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.7.3.tgz#bcd03df283699637fa9599c0f83381abcf2fbe17"
+ringcentral-js-concise@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.7.4.tgz#c45b5f4ff752c8892e4b342335e2a6bb99cfd6da"
   dependencies:
     axios "^0.18.0"
     js-base64 "^2.4.9"

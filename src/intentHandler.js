@@ -30,6 +30,16 @@ export const handleIntent = async (intent, event, service) => {
     return sendAuthorizationLink(group, bot)
   }
 
+  rc.token(service.data.token)
+  const tokenChanged = token => {
+    service.update({
+      data: {
+        id: token.owner_id, token
+      }
+    })
+  }
+  rc.on('tokenChanged', tokenChanged)
+
   try {
     switch (intent.intentName) {
       case 'CompanyInfo':
@@ -61,12 +71,13 @@ export const handleIntent = async (intent, event, service) => {
     }
   } catch (e) {
     if (e.data && /\btoken\b/i.test(e.data.message)) { // refresh token invalid
-      throw e
-      // await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
-      // await sendAuthorizationLink(group, bot)
-      // await service.destroy()
+      await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
+      await sendAuthorizationLink(group, bot)
+      await service.destroy()
     }
     throw e
+  } finally {
+    rc.removeListener('tokenChanged', tokenChanged)
   }
 }
 
@@ -139,7 +150,6 @@ Here is a list of features available for **Caller ID settings**:
 }
 
 const handleCompanyInfo = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
     brand_id: r.data['serviceInfo']['brand']['id'],
@@ -153,7 +163,6 @@ const handleCompanyInfo = async (intent, event, service) => {
 }
 
 const handleCompanyServicePlan = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
     service_id: r.data['serviceInfo']['servicePlan']['id'],
@@ -165,7 +174,6 @@ const handleCompanyServicePlan = async (intent, event, service) => {
 }
 
 const handleCompanyBillingPlan = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
     billing_id: r.data['serviceInfo']['billingPlan']['id'],
@@ -180,7 +188,6 @@ const handleCompanyBillingPlan = async (intent, event, service) => {
 }
 
 const handleCompanyTimeZone = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
     id: r.data['regionalSettings']['timezone']['id'],
@@ -193,7 +200,6 @@ const handleCompanyTimeZone = async (intent, event, service) => {
 }
 
 const handleCompanyGreeting = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
     id: r.data['regionalSettings']['greetingLanguage']['id'],
@@ -205,7 +211,6 @@ const handleCompanyGreeting = async (intent, event, service) => {
 }
 
 const handlePersonalInfo = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~/extension/~')
   const obj = {
     first_name: r.data['contact']['firstName'],
@@ -225,7 +230,6 @@ const handlePersonalInfo = async (intent, event, service) => {
 }
 
 const handleBusinessHours = async (intent, event, service) => {
-  rc.token(service.data.token)
   let r
   if (intent.slots.HoursFor === 'personal') {
     r = await rc.get('/restapi/v1.0/account/~/extension/~/business-hours')
@@ -266,7 +270,6 @@ const handleBusinessHours = async (intent, event, service) => {
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
-  rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~/extension/~/presence', {
     params: {
       detailedTelephonyState: true,
