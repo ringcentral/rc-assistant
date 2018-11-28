@@ -6,13 +6,19 @@ import { formatObj, sendAuthorizationLink } from './util'
 export const handleIntent = async (intent, event, service) => {
   console.log(JSON.stringify(intent, null, 2))
   const { bot, group } = event
-  if (intent.dialogState === 'ElicitIntent' || intent.dialogState === 'Failed') {
-    return bot.sendMessage(group.id, { text: intent.message })
+  if (intent.dialogState === 'ElicitSlot' || intent.dialogState === 'ElicitIntent' || intent.dialogState === 'Failed') {
+    return bot.sendMessage(group.id, { text: intent.message.replace(/\\n/g, '\n') })
+  }
+
+  if (intent.dialogState !== 'ReadyForFulfillment') {
+    throw new Error(`unexpected intent dialogState: ${intent.dialogState}`)
   }
 
   switch (intent.intentName) {
     case 'Hello':
       return handleHello(intent, event)
+    case 'Help':
+      return handleHelp(intent, event)
     default:
       break
   }
@@ -54,6 +60,60 @@ Hello ![:Person](${userId}), I am ![:Person](${bot.id}). I can help you with the
 If you would like see more detailed information about any of the functions above, please ask.
 `.trim()
   await bot.sendMessage(group.id, { text: helloMessage })
+}
+
+const handleHelp = async (intent, event) => {
+  let text = ''
+  switch (intent.slots.FeatureGroup) {
+    case 'company info':
+      text = `
+Here is a list of features available for **company information**:
+* **View company details** - company id, name, main number and operator extension
+* **View company billing plan** - billing id, name, duration unit, duration, type and included phone lines
+* **View company service plan** - service ID, name and service edition
+* **View company business hours** - operation hours for the entire week
+* **View company greeting language** - greeting language, name and local code
+* **View company time-zone** - time-zone ID, name, description and bias
+`
+      break
+    case 'personal info':
+      text = `
+Here is a list of features available for **personal info**:
+* **View your personal information** - First and Last Name, Company, Business Phone and Business Hours
+* **View business hours** - your business hours for the entire week
+* **Edit my business hours**
+* **Services available to you** - lists all the RingCentral services that available for you to use
+* **Services unavailable to me** - lists all the RingCentral services that are not available for you
+* **Edit your personal information** - you can edit your First and Last Name, Business Phone, Business Hourss and Address
+`
+      break
+    case 'notification settings':
+      text = `
+Here is a list of features available for **notification settings**:
+* **View notifications settings** for voicemails, missed calls, fax and texts
+* **Enable/Disable email or sms notifications** for voicemails, missed calls, fax and texts
+`
+      break
+    case 'presence info':
+      text = `
+Here is a list of features available for **presence info**:
+* **View your presence info** - lists your Presence, Telephony, User and Do Not Disturb status
+* **Change your Do Not Disturb status ** to take all calls or to not accept any calls
+* **Set your user status** to Available, Busy or Offline
+`
+      break
+    case 'caller ID info':
+      text = `
+Here is a list of features available for **Caller ID settings**:
+* **View your caller ID settings** for available features
+* **Edit caller ID settings**
+`
+      break
+    default:
+      break
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: text.trim() })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
