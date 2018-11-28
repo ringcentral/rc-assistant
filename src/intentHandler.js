@@ -41,6 +41,12 @@ export const handleIntent = async (intent, event, service) => {
       case 'CompanyBillingPlan':
         await handleCompanyBillingPlan(intent, event, service)
         break
+      case 'CompanyTimeZone':
+        await handleCompanyTimeZone(intent, event, service)
+        break
+      case 'CompanyGreeting':
+        await handleCompanyGreeting(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -162,6 +168,31 @@ const handleCompanyBillingPlan = async (intent, event, service) => {
     duration: r.data['serviceInfo']['billingPlan']['duration'],
     type: r.data['serviceInfo']['billingPlan']['type'],
     included_phone_lines: r.data['serviceInfo']['billingPlan']['includedPhoneLines']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handleCompanyTimeZone = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~')
+  const obj = {
+    id: r.data['regionalSettings']['timezone']['id'],
+    name: r.data['regionalSettings']['timezone']['name'],
+    description: r.data['regionalSettings']['timezone']['description'],
+    bias: r.data['regionalSettings']['timezone']['bias']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handleCompanyGreeting = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~')
+  const obj = {
+    id: r.data['regionalSettings']['greetingLanguage']['id'],
+    name: r.data['regionalSettings']['greetingLanguage']['name'],
+    locale_code: r.data['regionalSettings']['greetingLanguage']['localeCode']
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: formatObj(obj) })
