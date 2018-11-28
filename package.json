@@ -12,7 +12,7 @@
     "pg": "^7.6.1",
     "ramda": "^0.26.0",
     "ringcentral-chatbot": "^0.3.9",
-    "ringcentral-js-concise": "^0.7.2",
+    "ringcentral-js-concise": "^0.7.3",
     "serverless-http": "^1.8.0"
   },
   "devDependencies": {
