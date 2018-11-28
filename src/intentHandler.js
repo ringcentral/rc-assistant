@@ -63,6 +63,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'BusinessHours':
         await handleBusinessHours(intent, event, service)
         break
+      case 'GetServices':
+        await handleGetServices(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -267,6 +270,22 @@ const handleBusinessHours = async (intent, event, service) => {
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: table })
+}
+
+const handleGetServices = async (intent, event, service) => {
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+  const serviceFeatures = r.data.serviceFeatures
+
+  const serviceType = intent.slots.ServiceType
+  let text
+  if (serviceType === 'available') {
+    text = serviceFeatures.filter(sf => sf.enabled).map(sf => sf.featureName).join(', ')
+  } else if (serviceType === 'unavailable') {
+    text = '|**Feature Name**|**Reason**|\n' +
+      serviceFeatures.filter(sf => !sf.enabled).map(sf => `|${sf.featureName}|${sf.reason}|`).join('\n')
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
