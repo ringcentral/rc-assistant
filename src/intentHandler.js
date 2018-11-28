@@ -47,6 +47,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'CompanyGreeting':
         await handleCompanyGreeting(intent, event, service)
         break
+      case 'PersonalInfo':
+        await handlePersonalInfo(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -193,6 +196,26 @@ const handleCompanyGreeting = async (intent, event, service) => {
     id: r.data['regionalSettings']['greetingLanguage']['id'],
     name: r.data['regionalSettings']['greetingLanguage']['name'],
     locale_code: r.data['regionalSettings']['greetingLanguage']['localeCode']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handlePersonalInfo = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+  const obj = {
+    first_name: r.data['contact']['firstName'],
+    last_name: r.data['contact']['lastName'],
+    email: r.data['contact']['email'],
+    company: r.data['contact']['company'],
+    businessPhone: r.data['contact']['businessPhone'],
+    extensionNumber: r.data['extensionNumber']
+  }
+  if ('address' in r.data['contact']) {
+    obj.address = r.data['contact']['businessAddress']['street'] + '\n\t' +
+    r.data['contact']['businessAddress']['city'] + ', ' + r.data['contact']['businessAddress']['state'] + '\n\t' +
+    r.data['contact']['businessAddress']['country'] + ' ' + r.data['contact']['businessAddress']['zip']
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: formatObj(obj) })
