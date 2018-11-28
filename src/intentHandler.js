@@ -35,6 +35,12 @@ export const handleIntent = async (intent, event, service) => {
       case 'CompanyInfo':
         await handleCompanyInfo(intent, event, service)
         break
+      case 'CompanyServicePlan':
+        await handleCompanyServicePlan(intent, event, service)
+        break
+      case 'CompanyBillingPlan':
+        await handleCompanyBillingPlan(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -43,9 +49,10 @@ export const handleIntent = async (intent, event, service) => {
     }
   } catch (e) {
     if (e.data && /\btoken\b/i.test(e.data.message)) { // refresh token invalid
-      await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
-      await sendAuthorizationLink(group, bot)
-      await service.destroy()
+      throw e
+      // await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
+      // await sendAuthorizationLink(group, bot)
+      // await service.destroy()
     }
     throw e
   }
@@ -123,11 +130,38 @@ const handleCompanyInfo = async (intent, event, service) => {
   rc.token(service.data.token)
   const r = await rc.get('/restapi/v1.0/account/~')
   const obj = {
-    company_id: r.data['serviceInfo']['brand']['id'],
+    brand_id: r.data['serviceInfo']['brand']['id'],
     brand_name: r.data['serviceInfo']['brand']['name'],
     main_number: r.data['mainNumber'],
     operator_extension: r.data['operator']['extensionNumber'],
     home_country: r.data['serviceInfo']['brand']['homeCountry']['name']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handleCompanyServicePlan = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~')
+  const obj = {
+    service_id: r.data['serviceInfo']['servicePlan']['id'],
+    service_name: r.data['serviceInfo']['servicePlan']['name'],
+    service_edition: r.data['serviceInfo']['servicePlan']['edition']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
+}
+
+const handleCompanyBillingPlan = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~')
+  const obj = {
+    billing_id: r.data['serviceInfo']['billingPlan']['id'],
+    billing_name: r.data['serviceInfo']['billingPlan']['name'],
+    duration_unit: r.data['serviceInfo']['billingPlan']['durationUnit'],
+    duration: r.data['serviceInfo']['billingPlan']['duration'],
+    type: r.data['serviceInfo']['billingPlan']['type'],
+    included_phone_lines: r.data['serviceInfo']['billingPlan']['includedPhoneLines']
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: formatObj(obj) })
