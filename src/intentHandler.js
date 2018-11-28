@@ -69,6 +69,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'CallerID':
         await handleCallerID(intent, event, service)
         break
+      case 'EditPersonalInfo':
+        await handleEditPersonalInfo(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -315,6 +318,12 @@ const handleCallerID = async (intent, event, service) => {
   })
 }
 
+const handleEditPersonalInfo = async (intent, event, service) => {
+  const text = `[Click here](${process.env.RINGCENTRAL_SERVICE_WEB_SERVER}/application/settings/settings/extensionInfo/general) to edit your personal information.`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
 const handlePresenceInfo = async (intent, event, service) => {
   const r = await rc.get('/restapi/v1.0/account/~/extension/~/presence', {
     params: {
@@ -322,7 +331,7 @@ const handlePresenceInfo = async (intent, event, service) => {
       sipData: false
     }
   })
-  const dl = formatObj(R.pick([
+  const text = formatObj(R.pick([
     'presenceStatus',
     'telephonyStatus',
     'userStatus',
@@ -331,5 +340,5 @@ const handlePresenceInfo = async (intent, event, service) => {
     'pickUpCallsOnHold'
   ], r.data))
   const { bot, group } = event
-  await bot.sendMessage(group.id, { text: dl })
+  await bot.sendMessage(group.id, { text })
 }

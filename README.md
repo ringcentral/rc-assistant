@@ -39,3 +39,10 @@ npx sequelize init
 npx sequelize migration:create add-timestamps
 npx squelize db:migrate
 ```
+
+
+## Todo
+
+- AWS Lex support synonyms?
+    - information === info
+- Write auto test
