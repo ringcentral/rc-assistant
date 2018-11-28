@@ -32,6 +32,9 @@ export const handleIntent = async (intent, event, service) => {
 
   try {
     switch (intent.intentName) {
+      case 'CompanyInfo':
+        await handleCompanyInfo(intent, event, service)
+        break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
@@ -114,6 +117,20 @@ Here is a list of features available for **Caller ID settings**:
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: text.trim() })
+}
+
+const handleCompanyInfo = async (intent, event, service) => {
+  rc.token(service.data.token)
+  const r = await rc.get('/restapi/v1.0/account/~')
+  const obj = {
+    company_id: r.data['serviceInfo']['brand']['id'],
+    brand_name: r.data['serviceInfo']['brand']['name'],
+    main_number: r.data['mainNumber'],
+    operator_extension: r.data['operator']['extensionNumber'],
+    home_country: r.data['serviceInfo']['brand']['homeCountry']['name']
+  }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text: formatObj(obj) })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
