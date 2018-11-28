@@ -2,7 +2,6 @@ import { Service } from 'ringcentral-chatbot/dist/models'
 import Lexruntime from 'aws-sdk/clients/lexruntime'
 
 import { handleIntent } from './intentHandler'
-import { sendAuthorizationLink } from './util'
 
 const lexruntime = new Lexruntime({ region: process.env.AWS_REGION })
 
@@ -24,10 +23,6 @@ const handleMessage4Bot = async event => {
   const service = await Service.findOne({ where: {
     name: 'RingCentral', botId: bot.id, groupId: group.id
   } })
-  if (!service) {
-    await sendAuthorizationLink(group, bot)
-    return
-  }
   const intent = await lexruntime.postText({
     botAlias: process.env.AWS_LEX_BOT_NAME,
     botName: process.env.AWS_LEX_BOT_ALIAS,
