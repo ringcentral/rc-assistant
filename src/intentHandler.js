@@ -18,7 +18,7 @@ export const handleIntent = async (intent, event, service) => {
         throw new Error(`Unhandled intent: ${intent.intentName}`)
     }
   } catch (e) {
-    if (/\btoken\b/i.test(e.data.message)) { // refresh token invalid
+    if (e.data && /\btoken\b/i.test(e.data.message)) { // refresh token invalid
       await bot.sendMessage(group.id, { text: `I had been authorized to access RingCentral account, however it is expired/revoked.` })
       await sendAuthorizationLink(group, bot)
       await service.destroy()
