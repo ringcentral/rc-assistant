@@ -75,6 +75,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
         break
+      case 'EditUserStatus':
+        await handleEditUserStatus(intent, event, service)
+        break
       default:
         throw new Error(`Unhandled intent: ${intent.intentName}`)
     }
@@ -351,6 +354,15 @@ const handlePresenceInfo = async (intent, event, service) => {
     'ringOnMonitoredCall',
     'pickUpCallsOnHold'
   ], r.data))
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleEditUserStatus = async (intent, event, service) => {
+  const userStatus = intent.slots.UserStatus
+  const r = await rc.put('/restapi/v1.0/account/~/extension/~/presence', { userStatus })
+  console.log(r.data)
+  const text = `Successfully changed your user status to: **${userStatus}**`
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
 }
