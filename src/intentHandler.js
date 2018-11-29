@@ -81,6 +81,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'EditDnDStatus':
         await handleEditDnDStatus(intent, event, service)
         break
+      case 'NotificationSettings':
+        await handleNotificationSettings(intent, event, service)
+        break
       default:
         throw new Error(`Unhandled intent: ${intent.intentName}`)
     }
@@ -374,6 +377,33 @@ const handleEditDnDStatus = async (intent, event, service) => {
   const r = await rc.put('/restapi/v1.0/account/~/extension/~/presence', { dndStatus })
   console.log(r.data)
   const text = `Successfully changed your Do Not Disturb status to: **${dndStatus}**`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleNotificationSettings = async (intent, event, service) => {
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~/notification-settings')
+  const alertsFor = intent.slots.AlertsFor.toLowerCase()
+  let text
+  switch (alertsFor) {
+    case 'voicemail':
+      text = formatObj(R.pick(['notifyByEmail', 'notifyBySms', 'includeAttachment', 'markAsRead'], r.data['voicemails']))
+      break
+    case 'in-fax':
+      text = formatObj(R.pick(['notifyByEmail', 'notifyBySms', 'includeAttachment', 'markAsRead'], r.data['inboundFaxes']))
+      break
+    case 'out-fax':
+      text = formatObj(R.pick(['notifyByEmail', 'notifyBySms'], r.data['outboundFaxes']))
+      break
+    case 'in-text':
+      text = formatObj(R.pick(['notifyByEmail', 'notifyBySms'], r.data['inboundTexts']))
+      break
+    case 'missed call':
+      text = formatObj(R.pick(['notifyByEmail', 'notifyBySms'], r.data['missedCalls']))
+      break
+    default:
+      throw new Error('invalid notification alertsFor value: ', alertsFor)
+  }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
 }
