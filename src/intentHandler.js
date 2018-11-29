@@ -84,6 +84,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'NotificationSettings':
         await handleNotificationSettings(intent, event, service)
         break
+      case 'EditNotificationSettings':
+        await handleEditNotificationSettings(intent, event, service)
+        break
       default:
         throw new Error(`Unhandled intent: ${intent.intentName}`)
     }
@@ -404,6 +407,39 @@ const handleNotificationSettings = async (intent, event, service) => {
     default:
       throw new Error('invalid notification alertsFor value: ', alertsFor)
   }
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleEditNotificationSettings = async (intent, event, service) => {
+  const action = intent.slots.Action
+  const alertType = intent.slots.AlertType
+  const alertsFor = intent.slots.AlertsFor
+  const actionMap = {
+    'enable': true,
+    'disable': false
+  }
+  const alertTypeMap = {
+    'email': 'notifyByEmail',
+    'sms': 'notifyBySms'
+  }
+  const alertsForMap = {
+    'voicemail': 'voicemails',
+    'in-fax': 'inboundFaxes',
+    'out-fax': 'outboundFaxes',
+    'in-text': 'inboundTexts',
+    'missed call': 'missedCalls'
+  }
+
+  const r = await rc.get('/restapi/v1.0/account/~/extension/~/notification-settings')
+  const settings = r.data
+  settings[alertsForMap[alertsFor]][alertTypeMap[alertType]] = actionMap[action]
+  if (alertsFor === 'voicemail' || alertsFor === 'in-fax') {
+    settings[alertsForMap[alertsFor]]['includeAttachment'] = actionMap[action]
+  }
+  await rc.put('/restapi/v1.0/account/~/extension/~/notification-settings', settings)
+
+  const text = `You will${actionMap[action] ? ' ' : ' **NOT** '}receive **${alertType}** notifications for **${alertsFor}**.`
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
 }
