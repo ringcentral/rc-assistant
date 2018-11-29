@@ -210,7 +210,7 @@
               "messages": [
                 {
                   "contentType": "PlainText",
-                  "content": "Do you want to set you Do Not Disturb to **Take All Calls**, **Do Not Accept Any Calls**, **Take Department Calls Only** or **Do Not Accept Any Calls**?"
+                  "content": "Do you want to set you Do Not Disturb to **Take All Calls**, **Do Not Accept Any Calls**, **Take Department Calls Only** or **Do Not Accept Department Calls**?"
                 }
               ],
               "maxAttempts": 2,
