@@ -8,4 +8,7 @@ module.exports.app = serverlessHTTP(app)
 
 module.exports.proxy = createAsyncProxy('app')
 
-module.exports.maintain = async () => axios.put(`${process.env.RINGCENTRAL_CHATBOT_SERVER}/admin/maintain`)
+module.exports.maintain = async () => {
+  await axios.put(`${process.env.RINGCENTRAL_CHATBOT_SERVER}/admin/maintain`)
+  await axios.put(`${process.env.RINGCENTRAL_CHATBOT_SERVER}/admin/refresh-tokens`)
+}

@@ -34,8 +34,8 @@ export const handleIntent = async (intent, event, service) => {
   }
 
   rc.token(service.data.token)
-  const tokenChanged = token => {
-    service.update({
+  const tokenChanged = async token => {
+    await service.update({
       data: {
         id: token.owner_id, token
       }
