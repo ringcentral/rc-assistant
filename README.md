@@ -46,4 +46,4 @@ npx squelize db:migrate
 - AWS Lex support synonyms?
     - information === info
 - Write auto test
-- Deploy to Lambda
+- Send greeting message when join a new group
