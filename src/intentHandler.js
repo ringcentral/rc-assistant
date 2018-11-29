@@ -275,11 +275,10 @@ const handleBusinessHours = async (intent, event, service) => {
   } else if (intent.slots.HoursFor === 'company') {
     r = await rc.get('/restapi/v1.0/account/~/business-hours')
   }
-  console.log(r.data)
   let table = '|**Day**|**From**|**To**|\n'
   const schedule = r.data['schedule']
   if (R.isEmpty(schedule)) {
-    table = 'Provide 24/7 service'
+    table = 'Provide 24/7 service.'
   } else {
     const weeklyRanges = schedule['weeklyRanges']
     if ('monday' in weeklyRanges) {
@@ -327,7 +326,6 @@ const handleGetServices = async (intent, event, service) => {
 const handleCallerID = async (intent, event, service) => {
   const r = await rc.get('/restapi/v1.0/account/~/extension/~/caller-id')
   const fields = [{ 'title': 'Feature', 'style': 'Short', 'value': '' }, { 'title': 'Caller ID', 'style': 'Short', 'value': '' }]
-  console.log(r.data)
   r.data.byFeature.filter(f => !R.isNil(f.callerId) && !R.isEmpty(f.callerId)).forEach(({ feature, callerId }) => {
     fields.push({ 'title': ' ', 'value': feature, 'style': 'Short' })
     if (callerId['type'] === 'PhoneNumber') {
@@ -377,8 +375,7 @@ const handleEditUserStatus = async (intent, event, service) => {
 
 const handleEditDnDStatus = async (intent, event, service) => {
   const dndStatus = intent.slots.DnDStatus
-  const r = await rc.put('/restapi/v1.0/account/~/extension/~/presence', { dndStatus })
-  console.log(r.data)
+  await rc.put('/restapi/v1.0/account/~/extension/~/presence', { dndStatus })
   const text = `Successfully changed your Do Not Disturb status to: **${dndStatus}**`
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
