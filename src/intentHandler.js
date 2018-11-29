@@ -19,12 +19,15 @@ export const handleIntent = async (intent, event, service) => {
       return handleHello(intent, event)
     case 'Help':
       return handleHelp(intent, event)
+    case 'EditPersonalInfo':
+      return handleEditPersonalInfo(intent, event, service)
+    case 'EditCallerID':
+      return handleEditCallerID(intent, event, service)
+    case 'EditBusinessHours':
+      return handleEditBusinessHours(intent, event, service)
     default:
       break
   }
-
-  // before are services which don't need rc token
-  // after are services which do need rc token
 
   if (!service) {
     return sendAuthorizationLink(group, bot)
@@ -68,9 +71,6 @@ export const handleIntent = async (intent, event, service) => {
         break
       case 'CallerID':
         await handleCallerID(intent, event, service)
-        break
-      case 'EditPersonalInfo':
-        await handleEditPersonalInfo(intent, event, service)
         break
       case 'PresenceInfo':
         await handlePresenceInfo(intent, event, service)
@@ -156,6 +156,24 @@ Here is a list of features available for **Caller ID settings**:
   }
   const { bot, group } = event
   await bot.sendMessage(group.id, { text: text.trim() })
+}
+
+const handleEditPersonalInfo = async (intent, event, service) => {
+  const text = `[Click here](${process.env.RINGCENTRAL_SERVICE_WEB_SERVER}/application/settings/settings/extensionInfo/general) to edit your personal information.`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleEditCallerID = async (intent, event, service) => {
+  const text = `[Click here](${process.env.RINGCENTRAL_SERVICE_WEB_SERVER}/application/settings/outboundCallsFaxes/callerId) to edit your caller ID information.`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleEditBusinessHours = async (intent, event, service) => {
+  const text = `[Click here](${process.env.RINGCENTRAL_SERVICE_WEB_SERVER}/application/settings/settings/extensionInfo/settingsAndPermissions) to edit your bussiness hours.`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
 }
 
 const handleCompanyInfo = async (intent, event, service) => {
@@ -316,12 +334,6 @@ const handleCallerID = async (intent, event, service) => {
       'fields': fields
     }]
   })
-}
-
-const handleEditPersonalInfo = async (intent, event, service) => {
-  const text = `[Click here](${process.env.RINGCENTRAL_SERVICE_WEB_SERVER}/application/settings/settings/extensionInfo/general) to edit your personal information.`
-  const { bot, group } = event
-  await bot.sendMessage(group.id, { text })
 }
 
 const handlePresenceInfo = async (intent, event, service) => {
