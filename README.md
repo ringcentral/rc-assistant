@@ -46,3 +46,5 @@ npx squelize db:migrate
 - AWS Lex support synonyms?
     - information === info
 - Write auto test
+- Auto refresh user token
+- Deploy to Lambda
