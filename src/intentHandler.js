@@ -78,6 +78,9 @@ export const handleIntent = async (intent, event, service) => {
       case 'EditUserStatus':
         await handleEditUserStatus(intent, event, service)
         break
+      case 'EditDnDStatus':
+        await handleEditDnDStatus(intent, event, service)
+        break
       default:
         throw new Error(`Unhandled intent: ${intent.intentName}`)
     }
@@ -360,9 +363,17 @@ const handlePresenceInfo = async (intent, event, service) => {
 
 const handleEditUserStatus = async (intent, event, service) => {
   const userStatus = intent.slots.UserStatus
-  const r = await rc.put('/restapi/v1.0/account/~/extension/~/presence', { userStatus })
-  console.log(r.data)
+  await rc.put('/restapi/v1.0/account/~/extension/~/presence', { userStatus })
   const text = `Successfully changed your user status to: **${userStatus}**`
+  const { bot, group } = event
+  await bot.sendMessage(group.id, { text })
+}
+
+const handleEditDnDStatus = async (intent, event, service) => {
+  const dndStatus = intent.slots.DnDStatus
+  const r = await rc.put('/restapi/v1.0/account/~/extension/~/presence', { dndStatus })
+  console.log(r.data)
+  const text = `Successfully changed your Do Not Disturb status to: **${dndStatus}**`
   const { bot, group } = event
   await bot.sendMessage(group.id, { text })
 }
