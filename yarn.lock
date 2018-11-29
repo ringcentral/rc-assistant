@@ -834,7 +834,7 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-aws-sdk@^2.228.0, aws-sdk@^2.362.0:
+aws-sdk@^2.228.0, aws-sdk@^2.366.0:
   version "2.366.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.366.0.tgz#3f2ead3b4efa4537286c6fa14995418ed9d65cbe"
   dependencies:
@@ -5188,19 +5188,19 @@ rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@~2.6.2:
   dependencies:
     glob "^7.0.5"
 
-ringcentral-chatbot@^0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/ringcentral-chatbot/-/ringcentral-chatbot-0.3.9.tgz#1a45df9ce141923dedc7e21dfaa4abf6bb333fe5"
+ringcentral-chatbot@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ringcentral-chatbot/-/ringcentral-chatbot-0.4.0.tgz#66f283e3968ff3145c9f59be7ac9c0e96f9a73d3"
   dependencies:
-    aws-sdk "^2.362.0"
+    aws-sdk "^2.366.0"
     axios "^0.18.0"
     express "^4.16.4"
     form-data "^2.3.3"
-    ringcentral-js-concise "^0.7.2"
+    ringcentral-js-concise "^0.7.4"
     sequelize "^4.41.2"
     timeout-as-promise "^1.0.0"
 
-ringcentral-js-concise@^0.7.2, ringcentral-js-concise@^0.7.4:
+ringcentral-js-concise@^0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.7.4.tgz#c45b5f4ff752c8892e4b342335e2a6bb99cfd6da"
   dependencies:
