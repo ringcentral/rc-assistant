@@ -28,7 +28,7 @@ ${formatObj(R.pick(['id', 'extensionNumber', 'type', 'name', 'account', 'uri'], 
   res.send('<!doctype><html><body><script>close()</script></body></html>')
 })
 
-app.put('/admin/refresh-tokens', async (req, res) => {
+app.put('/ringcentral/refresh-tokens', async (req, res) => {
   const services = await Service.findAll()
   for (const service of services) {
     rc.token(service.data.token)
