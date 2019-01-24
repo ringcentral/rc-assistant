@@ -1,7 +1,7 @@
 import { Service } from 'ringcentral-chatbot/dist/models'
 import Lexruntime from 'aws-sdk/clients/lexruntime'
 
-import { handleIntent } from './intentHandler'
+import { handleIntent, handleHello } from './intentHandler'
 
 const lexruntime = new Lexruntime({ region: process.env.AWS_REGION })
 
@@ -12,6 +12,7 @@ export const handle = async event => {
       await handleMessage4Bot(event)
       break
     case 'GroupJoined': // bot user joined a new group
+      await handleHello(undefined, event)
       break
     default:
       break

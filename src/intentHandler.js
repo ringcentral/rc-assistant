@@ -106,7 +106,7 @@ export const handleIntent = async (intent, event, service) => {
   }
 }
 
-const handleHello = async (intent, event) => {
+export const handleHello = async (intent, event) => {
   const { bot, group, userId } = event
   let helloMessage = `
 Hello ![:Person](${userId}), I am ![:Person](${bot.id}). I can help you with the following:
