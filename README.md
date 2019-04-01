@@ -1,5 +1,16 @@
 # RC Assistant
 
+
+### [Install it](https://www.ringcentral.com/apps/glip-rc-assistant-chatbot)
+
+
+---
+
+## Content below is for maintainers and contributors
+
+---
+
+
 ## Setup AWS Lex
 
 Imprort [aws_lex.json](aws_lex.json) file into AWS Lex.
