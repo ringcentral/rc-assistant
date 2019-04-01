@@ -4,6 +4,9 @@
 
 Imprort [aws_lex.json](aws_lex.json) file into AWS Lex.
 
+- Import the lex bot, not a new lex intent
+- You need to build the latest, then publish
+
 Configure `AWS_LEX_BOT_NAME` and `AWS_LEX_BOT_ALIAS` in `.env` files.
 
 
