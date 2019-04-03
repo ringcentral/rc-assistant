@@ -6,11 +6,11 @@
   },
   "resource": {
     "name": "GlipBot",
-    "version": "1",
+    "version": "4",
     "intents": [
       {
         "name": "GetServices",
-        "version": "5",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -25,10 +25,15 @@
         ],
         "slots": [
           {
-            "name": "ServiceType",
-            "slotConstraint": "Required",
+            "sampleUtterances": [
+              "{ServiceType} services",
+              "show me {ServiceType} services",
+              "I would like to see {ServiceType} services",
+              "list {ServiceType} services"
+            ],
             "slotType": "ServiceTypes",
             "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -36,22 +41,17 @@
                   "content": "Would you like to view **available** or **unavailable** services?"
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": [
-              "{ServiceType} services",
-              "show me {ServiceType} services",
-              "I would like to see {ServiceType} services",
-              "list {ServiceType} services"
-            ]
+            "name": "ServiceType"
           }
         ]
       },
       {
         "name": "EditUserStatus",
-        "version": "2",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -70,10 +70,14 @@
         ],
         "slots": [
           {
-            "name": "UserStatus",
-            "slotConstraint": "Required",
+            "sampleUtterances": [
+              "Set it to {UserStatus}",
+              "Update it to {UserStatus}",
+              "change it to {UserStatus}"
+            ],
             "slotType": "UserStatusTypes",
             "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -81,15 +85,11 @@
                   "content": "Do you want to update your status to **Available**, **Busy** or **Offline**? "
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": [
-              "Set it to {UserStatus}",
-              "Update it to {UserStatus}",
-              "change it to {UserStatus}"
-            ]
+            "name": "UserStatus"
           }
         ]
       },
@@ -137,7 +137,7 @@
       },
       {
         "name": "BusinessHours",
-        "version": "11",
+        "version": "4",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -157,14 +157,19 @@
           "list business hours",
           "show business hours",
           "view {HoursFor} business hours",
-          "show me {HoursFor} business hours"
+          "show me {HoursFor} business hours",
+          "business hour"
         ],
         "slots": [
           {
-            "name": "HoursFor",
-            "slotConstraint": "Required",
+            "sampleUtterances": [
+              "I would like to see business hours for {HoursFor}",
+              "{HoursFor} business hours",
+              "business hours for {HoursFor}"
+            ],
             "slotType": "BusinessHoursTypes",
             "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -172,21 +177,17 @@
                   "content": "Would you like to view your **personal business hours** or the **company business hours**? "
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": [
-              "I would like to see business hours for {HoursFor}",
-              "{HoursFor} business hours",
-              "business hours for {HoursFor}"
-            ]
+            "name": "HoursFor"
           }
         ]
       },
       {
         "name": "EditDnDStatus",
-        "version": "8",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -202,31 +203,31 @@
         ],
         "slots": [
           {
-            "name": "DnDStatus",
-            "slotConstraint": "Required",
+            "sampleUtterances": [
+              "set it to {DnDStatus}",
+              "change it to {DnDStatus}"
+            ],
             "slotType": "DnDStatusTypes",
-            "slotTypeVersion": "5",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
                   "contentType": "PlainText",
-                  "content": "Do you want to set you Do Not Disturb to **Take All Calls**, **Do Not Accept Any Calls**, **Take Department Calls Only** or **Do Not Accept Department Calls**?"
+                  "content": "Do you want to set you Do Not Disturb to **Take All Calls**, **Do Not Accept Any Calls**, **Take Department Calls Only** or **Do Not Accept Any Calls**?"
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": [
-              "set it to {DnDStatus}",
-              "change it to {DnDStatus}"
-            ]
+            "name": "DnDStatus"
           }
         ]
       },
       {
         "name": "NotificationSettings",
-        "version": "7",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -247,10 +248,10 @@
         ],
         "slots": [
           {
-            "name": "AlertsFor",
-            "slotConstraint": "Required",
+            "sampleUtterances": [],
             "slotType": "NotificationsFor",
-            "slotTypeVersion": "2",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -258,17 +259,17 @@
                   "content": "Would you like to view notification settings for **voicemail**, **in-fax**, **out-fax**, **in-text** or **missed calls**?"
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": []
+            "name": "AlertsFor"
           }
         ]
       },
       {
         "name": "EditBusinessHours",
-        "version": "3",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -285,7 +286,7 @@
       },
       {
         "name": "EditPersonalInfo",
-        "version": "3",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -302,7 +303,7 @@
       },
       {
         "name": "PersonalInfo",
-        "version": "4",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -319,7 +320,7 @@
       },
       {
         "name": "Help",
-        "version": "27",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -341,10 +342,15 @@
         ],
         "slots": [
           {
-            "name": "FeatureGroup",
-            "slotConstraint": "Required",
+            "sampleUtterances": [
+              "I need help with {FeatureGroup}",
+              "can you help me with {FeatureGroup}",
+              "viewing {FeatureGroup}",
+              "editing {FeatureGroup}"
+            ],
             "slotType": "CommandGroups",
-            "slotTypeVersion": "4",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -352,16 +358,11 @@
                   "content": "I can help you with the following:\\n* **Company Information**\\n* **Notifications Settings**\\n* **Personal Information**\\n* **Presence information**\\n* **Caller ID setting**\\nWhat do you need help with?"
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": [
-              "I need help with {FeatureGroup}",
-              "can you help me with {FeatureGroup}",
-              "viewing {FeatureGroup}",
-              "editing {FeatureGroup}"
-            ]
+            "name": "FeatureGroup"
           }
         ]
       },
@@ -381,7 +382,7 @@
       },
       {
         "name": "PresenceInfo",
-        "version": "3",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -405,7 +406,7 @@
       },
       {
         "name": "EditNotificationSettings",
-        "version": "11",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -422,10 +423,10 @@
         ],
         "slots": [
           {
-            "name": "Action",
-            "slotConstraint": "Required",
+            "sampleUtterances": [],
             "slotType": "NotificationActionTypes",
-            "slotTypeVersion": "2",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -433,17 +434,17 @@
                   "content": "Would you like to **enable** or **disable** **{AlertType}** notifications for **{AlertsFor}**?"
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 3,
-            "sampleUtterances": []
+            "name": "Action"
           },
           {
-            "name": "AlertsFor",
-            "slotConstraint": "Required",
+            "sampleUtterances": [],
             "slotType": "NotificationsFor",
-            "slotTypeVersion": "2",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -459,17 +460,17 @@
                   "content": "Would you like to **{Action}** notifications for  **voicemail**, **in-fax**, **out-fax**, **in-texts** or **missed calls**? "
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 1,
-            "sampleUtterances": []
+            "name": "AlertsFor"
           },
           {
-            "name": "AlertType",
-            "slotConstraint": "Required",
+            "sampleUtterances": [],
             "slotType": "NotificationTypes",
             "slotTypeVersion": "1",
+            "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
@@ -481,17 +482,17 @@
                   "content": "Would you like to **{Action}** **email** or **sms** notifications for **{AlertsFor}**? "
                 }
               ],
-              "maxAttempts": 2,
-              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}"
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
             },
             "priority": 2,
-            "sampleUtterances": []
+            "name": "AlertType"
           }
         ]
       },
       {
         "name": "CompanyInfo",
-        "version": "3",
+        "version": "2",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -501,13 +502,14 @@
           "view company information",
           "I would like to view my company info",
           "show me company details",
-          "view company details"
+          "view company details",
+          "company info"
         ],
         "slots": []
       },
       {
         "name": "CallerID",
-        "version": "2",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -537,7 +539,7 @@
       },
       {
         "name": "Hello",
-        "version": "2",
+        "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
@@ -553,7 +555,7 @@
     "slotTypes": [
       {
         "name": "DnDStatusTypes",
-        "version": "5",
+        "version": "1",
         "enumerationValues": [
           {
             "value": "TakeAllCalls",
@@ -634,7 +636,7 @@
       {
         "description": "Lists all the command groups for the glip bot",
         "name": "CommandGroups",
-        "version": "4",
+        "version": "1",
         "enumerationValues": [
           {
             "value": "company info",
@@ -701,7 +703,7 @@
       },
       {
         "name": "NotificationsFor",
-        "version": "2",
+        "version": "1",
         "enumerationValues": [
           {
             "value": "voicemail",
@@ -761,7 +763,7 @@
       },
       {
         "name": "NotificationActionTypes",
-        "version": "2",
+        "version": "1",
         "enumerationValues": [
           {
             "value": "enable",
