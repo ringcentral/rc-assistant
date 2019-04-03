@@ -6,7 +6,7 @@ jest.setTimeout(16000)
 const lexruntime = new Lexruntime({ region: 'us-east-1' })
 
 describe('AWS Lex', () => {
-  test('default', async () => {
+  test('presence info', async () => {
     const data = await lexruntime.postText({
       botAlias: 'GlipBot',
       botName: 'GlipBot',
@@ -18,6 +18,29 @@ describe('AWS Lex', () => {
     }).promise()
     expect(data).toEqual({
       intentName: 'PresenceInfo',
+      slots: {},
+      message: null,
+      messageFormat: null,
+      dialogState: 'ReadyForFulfillment',
+      slotToElicit: null,
+      sessionAttributes: {
+        hello: '111'
+      }
+    })
+  })
+
+  test('company information', async () => {
+    const data = await lexruntime.postText({
+      botAlias: 'GlipBot',
+      botName: 'GlipBot',
+      inputText: 'company information',
+      userId: '123456',
+      sessionAttributes: {
+        hello: '111'
+      }
+    }).promise()
+    expect(data).toEqual({
+      intentName: 'CompanyInfo',
       slots: {},
       message: null,
       messageFormat: null,
