@@ -1,7 +1,8 @@
 /* eslint-env jest */
 import Lexruntime from 'aws-sdk/clients/lexruntime'
+import uuid from 'uuid/v1'
 
-jest.setTimeout(16000)
+jest.setTimeout(64000)
 
 const lexruntime = new Lexruntime({ region: 'us-east-1' })
 
@@ -10,26 +11,31 @@ const getIntent = async inputText => {
     botAlias: 'GlipBot',
     botName: 'GlipBot',
     inputText,
-    userId: '123456',
+    userId: uuid(),
     sessionAttributes: {
       hello: '111'
     }
   }).promise()
   console.log(data)
-  return data.intentName
+  return data
 }
 
 describe('AWS Lex', () => {
   test('presence info', async () => {
-    const intentName = await getIntent('presence info')
-    expect(intentName).toEqual('PresenceInfo')
+    const data = await getIntent('presence info')
+    expect(data.intentName).toEqual('PresenceInfo')
   })
   test('company information', async () => {
-    const intentName = await getIntent('company information')
-    expect(intentName).toEqual('CompanyInfo')
+    const data = await getIntent('company information')
+    expect(data.intentName).toEqual('CompanyInfo')
   })
   test('company info', async () => {
-    const intentName = await getIntent('company info')
-    expect(intentName).toEqual('CompanyInfo')
+    const data = await getIntent('company info')
+    expect(data.intentName).toEqual('CompanyInfo')
+  })
+  test('business hour', async () => {
+    const data = await getIntent('business hour')
+    expect(data.intentName).toEqual('BusinessHours')
+    expect(data.slots).toEqual({ HoursFor: null })
   })
 })
