@@ -11,6 +11,13 @@
 ---
 
 
+## Generate AWS Lex config
+
+```
+yarn generate
+```
+
+
 ## Setup AWS Lex
 
 Imprort [aws_lex.json](aws_lex.json) file into AWS Lex.

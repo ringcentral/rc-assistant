@@ -5,7 +5,8 @@
     "ngrok": "ngrok http -region ap 3000",
     "build": "rm -rf dist && babel src --out-dir dist --source-maps",
     "deploy": "yarn test && yarn build && sls deploy",
-    "test": "jest"
+    "test": "jest",
+    "generate": "node -r @babel/register src/generate.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
