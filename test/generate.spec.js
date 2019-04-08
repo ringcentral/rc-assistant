@@ -11,22 +11,22 @@ describe('generateUtterances', () => {
     var utterances = generateUtterances(action, subject, slot)
     console.log(utterances)
     expect(utterances).toEqual([
-      'business hour',
-      '{HoursFor} business hour',
-      'view business hour',
-      'view {HoursFor} business hour',
-      'show business hour',
-      'show {HoursFor} business hour',
-      'display business hour',
-      'display {HoursFor} business hour',
-      'get business hour',
-      'get {HoursFor} business hour',
-      'list business hour',
-      'list {HoursFor} business hour',
-      'what is business hour',
-      'what is {HoursFor} business hour',
-      'see business hour',
-      'see {HoursFor} business hour'
+      'business hours',
+      '{HoursFor} business hours',
+      'view business hours',
+      'view {HoursFor} business hours',
+      'show business hours',
+      'show {HoursFor} business hours',
+      'display business hours',
+      'display {HoursFor} business hours',
+      'get business hours',
+      'get {HoursFor} business hours',
+      'list business hours',
+      'list {HoursFor} business hours',
+      'what are business hours',
+      'what are {HoursFor} business hours',
+      'see business hours',
+      'see {HoursFor} business hours'
     ])
   })
 

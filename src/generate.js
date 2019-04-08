@@ -1,11 +1,13 @@
 import * as R from 'ramda'
+import pluralize from 'pluralize'
 
 const actions = {
-  view: ['view', 'show', 'display', 'get', 'list', 'what is', 'see'],
+  view: ['view', 'show', 'display', 'get', 'list', 'what are', 'see'],
   edit: ['edit', 'change', 'update', 'set', 'alter', 'modify']
 }
 
 export const generateUtterances = (action, subject, slot) => {
+  subject = pluralize(subject)
   const utterances = []
   R.forEach(verb => {
     utterances.push(`${verb} ${subject}`)
