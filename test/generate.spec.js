@@ -3,33 +3,25 @@ import fs from 'fs'
 
 import { generateUtterances } from '../src/generate'
 
-describe('generateUtterances', () => {
+describe('generateIntentUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
     var utterances = generateUtterances(action, subject, slot)
-    console.log(utterances)
     expect(utterances).toEqual([
-      'business hours',
-      '{HoursFor} business hours',
-      'view business hours',
-      'view {HoursFor} business hours',
-      'show business hours',
-      'show {HoursFor} business hours',
-      'display business hours',
-      'display {HoursFor} business hours',
-      'get business hours',
-      'get {HoursFor} business hours',
-      'list business hours',
-      'list {HoursFor} business hours',
-      'what are business hours',
-      'what are {HoursFor} business hours',
-      'see business hours',
-      'see {HoursFor} business hours'
+      'business hours', '{HoursFor} business hours', 'business hours for {HoursFor}',
+      'view business hours', 'view {HoursFor} business hours', 'view business hours for {HoursFor}',
+      'see business hours', 'see {HoursFor} business hours', 'see business hours for {HoursFor}',
+      'show business hours', 'show {HoursFor} business hours', 'show business hours for {HoursFor}',
+      'display business hours', 'display {HoursFor} business hours', 'display business hours for {HoursFor}',
+      'get business hours', 'get {HoursFor} business hours', 'get business hours for {HoursFor}',
+      'list business hours', 'list {HoursFor} business hours', 'list business hours for {HoursFor}'
     ])
   })
+})
 
+describe('generate whole file', () => {
   test('generate lex', () => {
     const action = 'view'
     const subject = 'business hour'
@@ -45,11 +37,7 @@ describe('generateUtterances', () => {
         'sampleUtterances': utterances,
         'slots': [
           {
-            'sampleUtterances': [
-              'I would like to see business hours for {HoursFor}',
-              '{HoursFor} business hours',
-              'business hours for {HoursFor}'
-            ],
+            'sampleUtterances': utterances,
             'slotType': 'RCAssistantBusinessHoursTypes',
             'slotTypeVersion': '1',
             'slotConstraint': 'Required',
