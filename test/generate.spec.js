@@ -1,14 +1,14 @@
 /* eslint-env jest */
 import fs from 'fs'
 
-import { generateUtterances } from '../src/generate'
+import { generateIntentUtterances, generateSlotUtterances } from '../src/generate'
 
 describe('generateIntentUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    var utterances = generateUtterances(action, subject, slot)
+    var utterances = generateIntentUtterances(action, subject, slot)
     expect(utterances).toEqual([
       'business hours', '{HoursFor} business hours', 'business hours for {HoursFor}',
       'view business hours', 'view {HoursFor} business hours', 'view business hours for {HoursFor}',
@@ -21,12 +21,29 @@ describe('generateIntentUtterances', () => {
   })
 })
 
+describe('generateSlotUtterances', () => {
+  test('view business hour', () => {
+    const action = 'view'
+    const subject = 'business hour'
+    const slot = 'HoursFor'
+    var utterances = generateSlotUtterances(action, subject, slot)
+    expect(utterances).toEqual([
+      '{HoursFor} business hours', 'business hours for {HoursFor}',
+      'view {HoursFor} business hours', 'view business hours for {HoursFor}',
+      'see {HoursFor} business hours', 'see business hours for {HoursFor}',
+      'show {HoursFor} business hours', 'show business hours for {HoursFor}',
+      'display {HoursFor} business hours', 'display business hours for {HoursFor}'
+    ])
+  })
+})
+
 describe('generate whole file', () => {
   test('generate lex', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    var utterances = generateUtterances(action, subject, slot)
+    var intentUtterances = generateIntentUtterances(action, subject, slot)
+    var slotUtterances = generateSlotUtterances(action, subject, slot)
     const intents = [
       {
         'name': 'RCAssistantBusinessHours',
@@ -34,10 +51,10 @@ describe('generate whole file', () => {
         'fulfillmentActivity': {
           'type': 'ReturnIntent'
         },
-        'sampleUtterances': utterances,
+        'sampleUtterances': intentUtterances,
         'slots': [
           {
-            'sampleUtterances': utterances,
+            'sampleUtterances': slotUtterances,
             'slotType': 'RCAssistantBusinessHoursTypes',
             'slotTypeVersion': '1',
             'slotConstraint': 'Required',
@@ -66,7 +83,7 @@ describe('generate whole file', () => {
           {
             'value': 'personal',
             'synonyms': [
-              'my', 'me'
+              'my'
             ]
           },
           {

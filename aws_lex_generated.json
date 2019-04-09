@@ -40,27 +40,16 @@
         "slots": [
           {
             "sampleUtterances": [
-              "business hours",
               "{HoursFor} business hours",
               "business hours for {HoursFor}",
-              "view business hours",
               "view {HoursFor} business hours",
               "view business hours for {HoursFor}",
-              "see business hours",
               "see {HoursFor} business hours",
               "see business hours for {HoursFor}",
-              "show business hours",
               "show {HoursFor} business hours",
               "show business hours for {HoursFor}",
-              "display business hours",
               "display {HoursFor} business hours",
-              "display business hours for {HoursFor}",
-              "get business hours",
-              "get {HoursFor} business hours",
-              "get business hours for {HoursFor}",
-              "list business hours",
-              "list {HoursFor} business hours",
-              "list business hours for {HoursFor}"
+              "display business hours for {HoursFor}"
             ],
             "slotType": "RCAssistantBusinessHoursTypes",
             "slotTypeVersion": "1",

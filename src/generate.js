@@ -6,7 +6,7 @@ const actions = {
   edit: ['edit', 'change', 'update', 'set', 'alter', 'modify']
 }
 
-export const generateUtterances = (action, subject, slot) => {
+export const generateIntentUtterances = (action, subject, slot) => {
   subject = pluralize(subject)
   const utterances = []
   R.forEach(verb => {
@@ -22,4 +22,12 @@ export const generateUtterances = (action, subject, slot) => {
     utterances.unshift(subject)
   }
   return utterances
+}
+
+export const generateSlotUtterances = (action, subject, slot) => {
+  const utterances = generateIntentUtterances(action, subject, slot)
+  return R.pipe(
+    R.filter(u => u.includes(`{${slot}}`)),
+    R.slice(0, 10)
+  )(utterances)
 }
