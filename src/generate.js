@@ -41,8 +41,19 @@ export const generateSlotUtterances = (action, subjects, slot) => {
 export const generateDefinitions = (prefix, items) => {
   const intents = []
   const slotTypes = []
-  items.forEach(item => {
-    const { action, subjects, slot } = item
+  for (const item of items) {
+    const { action, subjects, slot, utterances } = item
+    if (!subjects) {
+      intents.push({
+        'name': `${prefix}${pascalCase(action)}`,
+        'version': '1',
+        'fulfillmentActivity': {
+          'type': 'ReturnIntent'
+        },
+        sampleUtterances: utterances
+      })
+      continue
+    }
     const subject = subjects[0]
     intents.push({
       'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
@@ -86,7 +97,7 @@ export const generateDefinitions = (prefix, items) => {
         valueSelectionStrategy: 'TOP_RESOLUTION'
       })
     }
-  })
+  }
   return { intents, slotTypes }
 }
 

@@ -295,6 +295,22 @@
             "name": "status"
           }
         ]
+      },
+      {
+        "name": "RCAssistantHello",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "hello",
+          "hi",
+          "hey",
+          "hi there",
+          "good morning",
+          "good afternoon",
+          "good evening"
+        ]
       }
     ],
     "slotTypes": [

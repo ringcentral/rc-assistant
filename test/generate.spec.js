@@ -86,6 +86,10 @@ describe('generate whole file', () => {
             ['disabled', 'inactive', 'unavailable', 'inaccessible']
           ]
         }
+      },
+      {
+        action: 'hello',
+        utterances: ['hello', 'hi', 'hey', 'hi there', 'good morning', 'good afternoon', 'good evening']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
