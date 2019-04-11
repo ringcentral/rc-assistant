@@ -32,13 +32,13 @@ export const generateSlotUtterances = (action, subject, slot) => {
   )(utterances)
 }
 
-export const generateDefinitions = (items, prefix = 'RCAssistant') => {
+export const generateDefinitions = (prefix, items) => {
   const { action, subject, slot } = items[0]
   const intentUtterances = generateIntentUtterances(action, subject, slot)
   const slotUtterances = generateSlotUtterances(action, subject, slot)
   const intents = [
     {
-      'name': 'RCAssistantBusinessHours',
+      'name': `${prefix}BusinessHours`,
       'version': '1',
       'fulfillmentActivity': {
         'type': 'ReturnIntent'
@@ -47,7 +47,7 @@ export const generateDefinitions = (items, prefix = 'RCAssistant') => {
       'slots': [
         {
           'sampleUtterances': slotUtterances,
-          'slotType': 'RCAssistantBusinessHoursTypes',
+          'slotType': `${prefix}BusinessHoursTypes`,
           'slotTypeVersion': '1',
           'slotConstraint': 'Required',
           'valueElicitationPrompt': {
@@ -69,7 +69,7 @@ export const generateDefinitions = (items, prefix = 'RCAssistant') => {
   const slotTypes = [
     {
       'description': 'personal or company business hours',
-      'name': 'RCAssistantBusinessHoursTypes',
+      'name': `${prefix}BusinessHoursTypes`,
       'version': '1',
       'enumerationValues': [
         {
@@ -91,7 +91,7 @@ export const generateDefinitions = (items, prefix = 'RCAssistant') => {
   return { intents, slotTypes }
 }
 
-export const generateLex = (intents, slotTypes) => {
+export const generateLex = (name, intents, slotTypes) => {
   return {
     'metadata': {
       'schemaVersion': '1.0',
@@ -99,7 +99,7 @@ export const generateLex = (intents, slotTypes) => {
       'importFormat': 'JSON'
     },
     'resource': {
-      'name': 'RCAssistant',
+      name,
       'version': '1',
       intents,
       slotTypes,
@@ -127,3 +127,11 @@ export const generateLex = (intents, slotTypes) => {
     }
   }
 }
+
+const generate = (name, items) => {
+  const { intents, slotTypes } = generateDefinitions(name, items)
+  const lex = generateLex(name, intents, slotTypes)
+  return lex
+}
+
+export default generate

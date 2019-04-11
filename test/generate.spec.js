@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import fs from 'fs'
 
-import { generateIntentUtterances, generateSlotUtterances, generateLex, generateDefinitions } from '../src/generate'
+import generate, { generateIntentUtterances, generateSlotUtterances } from '../src/generate'
 
 describe('generateIntentUtterances', () => {
   test('view business hour', () => {
@@ -42,8 +42,7 @@ describe('generate whole file', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    const { intents, slotTypes } = generateDefinitions([{ action, subject, slot }])
-    const lex = generateLex(intents, slotTypes)
+    const lex = generate('RCAssistant', [{ action, subject, slot }])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
   })
 })
