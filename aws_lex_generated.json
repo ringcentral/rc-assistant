@@ -376,6 +376,118 @@
           "list presence information",
           "list presence info"
         ]
+      },
+      {
+        "name": "RCAssistantViewPersonalInfo",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "personal info",
+          "personal information",
+          "personal details",
+          "view personal details",
+          "view personal information",
+          "view personal info",
+          "see personal details",
+          "see personal information",
+          "see personal info",
+          "show personal details",
+          "show personal information",
+          "show personal info",
+          "display personal details",
+          "display personal information",
+          "display personal info",
+          "get personal details",
+          "get personal information",
+          "get personal info",
+          "list personal details",
+          "list personal information",
+          "list personal info"
+        ]
+      },
+      {
+        "name": "RCAssistantViewNotificationSettings",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "notification settings",
+          "{type} notification settings",
+          "notification settings for {type}",
+          "alert settings",
+          "{type} alert settings",
+          "alert settings for {type}",
+          "view alert settings",
+          "view {type} alert settings",
+          "view alert settings for {type}",
+          "view notification settings",
+          "view {type} notification settings",
+          "view notification settings for {type}",
+          "see alert settings",
+          "see {type} alert settings",
+          "see alert settings for {type}",
+          "see notification settings",
+          "see {type} notification settings",
+          "see notification settings for {type}",
+          "show alert settings",
+          "show {type} alert settings",
+          "show alert settings for {type}",
+          "show notification settings",
+          "show {type} notification settings",
+          "show notification settings for {type}",
+          "display alert settings",
+          "display {type} alert settings",
+          "display alert settings for {type}",
+          "display notification settings",
+          "display {type} notification settings",
+          "display notification settings for {type}",
+          "get alert settings",
+          "get {type} alert settings",
+          "get alert settings for {type}",
+          "get notification settings",
+          "get {type} notification settings",
+          "get notification settings for {type}",
+          "list alert settings",
+          "list {type} alert settings",
+          "list alert settings for {type}",
+          "list notification settings",
+          "list {type} notification settings",
+          "list notification settings for {type}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [
+              "{type} notification settings",
+              "notification settings for {type}",
+              "{type} alert settings",
+              "alert settings for {type}",
+              "view {type} alert settings",
+              "view alert settings for {type}",
+              "view {type} notification settings",
+              "view notification settings for {type}",
+              "see {type} alert settings",
+              "see alert settings for {type}"
+            ],
+            "slotType": "RCAssistantNotificationSettingsType",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "**voicemail** notification settings or **missed call** notification settings or **incoming fax** notification settings or **outgoing fax** notification settings or **incoming text** notification settings?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "type"
+          }
+        ]
       }
     ],
     "slotTypes": [
@@ -424,6 +536,52 @@
               "inactive",
               "unavailable",
               "inaccessible"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "notification settings type",
+        "name": "RCAssistantNotificationSettingsType",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "voicemail",
+            "synonyms": [
+              "voicemails",
+              "voice mail",
+              "voice mails"
+            ]
+          },
+          {
+            "value": "missed call",
+            "synonyms": [
+              "missed calls"
+            ]
+          },
+          {
+            "value": "incoming fax",
+            "synonyms": [
+              "inbound fax",
+              "in fax",
+              "in-fax"
+            ]
+          },
+          {
+            "value": "outgoing fax",
+            "synonyms": [
+              "outbound fax",
+              "out fax",
+              "out-fax"
+            ]
+          },
+          {
+            "value": "incoming text",
+            "synonyms": [
+              "inbound text",
+              "in text",
+              "in-text"
             ]
           }
         ],

@@ -94,6 +94,25 @@ describe('generate whole file', () => {
       {
         action: 'view',
         subjects: ['presence info', 'presence information', 'do not disturb status', 'dnd status', 'user status', 'my status', 'status info', 'status information']
+      },
+      {
+        action: 'view',
+        subjects: ['personal info', 'personal information', 'personal details']
+      },
+      {
+        action: 'view',
+        subjects: ['notification settings', 'alert settings'],
+        slot: {
+          name: 'type',
+          preposition: 'for',
+          options: [
+            ['voicemail', 'voicemails', 'voice mail', 'voice mails'],
+            ['missed call', 'missed calls'],
+            ['incoming fax', 'inbound fax', 'in fax', 'in-fax'],
+            ['outgoing fax', 'outbound fax', 'out fax', 'out-fax'],
+            ['incoming text', 'inbound text', 'in text', 'in-text']
+          ]
+        }
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
