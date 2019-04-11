@@ -42,7 +42,7 @@ describe('generate whole file', () => {
     const lex = generate('RCAssistant', [
       {
         action: 'view',
-        subjects: ['business hours'],
+        subjects: ['business hours', 'business hour'],
         slot: {
           name: 'type',
           options: [
@@ -60,7 +60,7 @@ describe('generate whole file', () => {
       },
       {
         action: 'view',
-        subjects: ['company greetings']
+        subjects: ['company greetings', 'company greeting']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
