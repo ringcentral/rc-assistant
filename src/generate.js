@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import pluralize from 'pluralize'
+import { pascalCase } from 'change-case'
 
 const actions = {
   view: ['view', 'see', 'show', 'display', 'get', 'list'],
@@ -38,7 +39,7 @@ export const generateDefinitions = (prefix, items) => {
   const slotUtterances = generateSlotUtterances(action, subject, slot)
   const intents = [
     {
-      'name': `${prefix}BusinessHours`,
+      'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
       'version': '1',
       'fulfillmentActivity': {
         'type': 'ReturnIntent'
@@ -47,7 +48,7 @@ export const generateDefinitions = (prefix, items) => {
       'slots': [
         {
           'sampleUtterances': slotUtterances,
-          'slotType': `${prefix}BusinessHoursTypes`,
+          'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot)}`,
           'slotTypeVersion': '1',
           'slotConstraint': 'Required',
           'valueElicitationPrompt': {
@@ -61,7 +62,7 @@ export const generateDefinitions = (prefix, items) => {
             'maxAttempts': 2
           },
           'priority': 1,
-          'name': 'HoursFor'
+          'name': slot
         }
       ]
     }
@@ -69,7 +70,7 @@ export const generateDefinitions = (prefix, items) => {
   const slotTypes = [
     {
       'description': 'personal or company business hours',
-      'name': `${prefix}BusinessHoursTypes`,
+      'name': `${prefix}${pascalCase(subject)}${pascalCase(slot)}`,
       'version': '1',
       'enumerationValues': [
         {

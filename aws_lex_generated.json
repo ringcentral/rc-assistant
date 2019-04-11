@@ -9,49 +9,49 @@
     "version": "1",
     "intents": [
       {
-        "name": "RCAssistantBusinessHours",
+        "name": "RCAssistantViewBusinessHour",
         "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
         },
         "sampleUtterances": [
           "business hours",
-          "{HoursFor} business hours",
-          "business hours for {HoursFor}",
+          "{type} business hours",
+          "business hours for {type}",
           "view business hours",
-          "view {HoursFor} business hours",
-          "view business hours for {HoursFor}",
+          "view {type} business hours",
+          "view business hours for {type}",
           "see business hours",
-          "see {HoursFor} business hours",
-          "see business hours for {HoursFor}",
+          "see {type} business hours",
+          "see business hours for {type}",
           "show business hours",
-          "show {HoursFor} business hours",
-          "show business hours for {HoursFor}",
+          "show {type} business hours",
+          "show business hours for {type}",
           "display business hours",
-          "display {HoursFor} business hours",
-          "display business hours for {HoursFor}",
+          "display {type} business hours",
+          "display business hours for {type}",
           "get business hours",
-          "get {HoursFor} business hours",
-          "get business hours for {HoursFor}",
+          "get {type} business hours",
+          "get business hours for {type}",
           "list business hours",
-          "list {HoursFor} business hours",
-          "list business hours for {HoursFor}"
+          "list {type} business hours",
+          "list business hours for {type}"
         ],
         "slots": [
           {
             "sampleUtterances": [
-              "{HoursFor} business hours",
-              "business hours for {HoursFor}",
-              "view {HoursFor} business hours",
-              "view business hours for {HoursFor}",
-              "see {HoursFor} business hours",
-              "see business hours for {HoursFor}",
-              "show {HoursFor} business hours",
-              "show business hours for {HoursFor}",
-              "display {HoursFor} business hours",
-              "display business hours for {HoursFor}"
+              "{type} business hours",
+              "business hours for {type}",
+              "view {type} business hours",
+              "view business hours for {type}",
+              "see {type} business hours",
+              "see business hours for {type}",
+              "show {type} business hours",
+              "show business hours for {type}",
+              "display {type} business hours",
+              "display business hours for {type}"
             ],
-            "slotType": "RCAssistantBusinessHoursTypes",
+            "slotType": "RCAssistantBusinessHourType",
             "slotTypeVersion": "1",
             "slotConstraint": "Required",
             "valueElicitationPrompt": {
@@ -65,7 +65,7 @@
               "maxAttempts": 2
             },
             "priority": 1,
-            "name": "HoursFor"
+            "name": "type"
           }
         ]
       }
@@ -73,7 +73,7 @@
     "slotTypes": [
       {
         "description": "personal or company business hours",
-        "name": "RCAssistantBusinessHoursTypes",
+        "name": "RCAssistantBusinessHourType",
         "version": "1",
         "enumerationValues": [
           {
