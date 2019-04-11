@@ -54,7 +54,7 @@ describe('generate whole file', () => {
       },
       {
         action: 'view',
-        subjects: ['caller ID', 'callerID']
+        subjects: ['caller ID', 'callerID', 'caller ID settings', 'callerID settings', 'caller ID information', 'callerID information', 'caller ID info', 'callerID info']
       },
       {
         action: 'view',
@@ -113,6 +113,14 @@ describe('generate whole file', () => {
             ['incoming text', 'inbound text', 'in text', 'in-text']
           ]
         }
+      },
+      {
+        action: 'edit',
+        subjects: ['business hours', 'office hours', 'working hours', 'operating hours', 'hours of operation']
+      },
+      {
+        action: 'edit',
+        subjects: ['caller ID', 'callerID', 'caller ID settings', 'callerID settings', 'caller ID information', 'callerID information', 'caller ID info', 'callerID info']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
