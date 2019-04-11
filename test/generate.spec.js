@@ -1,14 +1,14 @@
 /* eslint-env jest */
 import fs from 'fs'
 
-import { generateIntentUtterances, generateSlotUtterances, generateLex } from '../src/generate'
+import { generateIntentUtterances, generateSlotUtterances, generateLex, generateDefinitions } from '../src/generate'
 
 describe('generateIntentUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    var utterances = generateIntentUtterances(action, subject, slot)
+    const utterances = generateIntentUtterances(action, subject, slot)
     expect(utterances).toEqual([
       'business hours', '{HoursFor} business hours', 'business hours for {HoursFor}',
       'view business hours', 'view {HoursFor} business hours', 'view business hours for {HoursFor}',
@@ -26,7 +26,7 @@ describe('generateSlotUtterances', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    var utterances = generateSlotUtterances(action, subject, slot)
+    const utterances = generateSlotUtterances(action, subject, slot)
     expect(utterances).toEqual([
       '{HoursFor} business hours', 'business hours for {HoursFor}',
       'view {HoursFor} business hours', 'view business hours for {HoursFor}',
@@ -42,60 +42,7 @@ describe('generate whole file', () => {
     const action = 'view'
     const subject = 'business hour'
     const slot = 'HoursFor'
-    var intentUtterances = generateIntentUtterances(action, subject, slot)
-    var slotUtterances = generateSlotUtterances(action, subject, slot)
-    const intents = [
-      {
-        'name': 'RCAssistantBusinessHours',
-        'version': '1',
-        'fulfillmentActivity': {
-          'type': 'ReturnIntent'
-        },
-        'sampleUtterances': intentUtterances,
-        'slots': [
-          {
-            'sampleUtterances': slotUtterances,
-            'slotType': 'RCAssistantBusinessHoursTypes',
-            'slotTypeVersion': '1',
-            'slotConstraint': 'Required',
-            'valueElicitationPrompt': {
-              'messages': [
-                {
-                  'contentType': 'PlainText',
-                  'content': 'Would you like to view your **personal business hours** or the **company business hours**? '
-                }
-              ],
-              'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
-              'maxAttempts': 2
-            },
-            'priority': 1,
-            'name': 'HoursFor'
-          }
-        ]
-      }
-    ]
-    const slotTypes = [
-      {
-        'description': 'personal or company business hours',
-        'name': 'RCAssistantBusinessHoursTypes',
-        'version': '1',
-        'enumerationValues': [
-          {
-            'value': 'personal',
-            'synonyms': [
-              'my'
-            ]
-          },
-          {
-            'value': 'company',
-            'synonyms': [
-              'office', 'organization', 'institution', 'enterprise'
-            ]
-          }
-        ],
-        'valueSelectionStrategy': 'TOP_RESOLUTION'
-      }
-    ]
+    const { intents, slotTypes } = generateDefinitions([{ action, subject, slot }])
     const lex = generateLex(intents, slotTypes)
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
   })

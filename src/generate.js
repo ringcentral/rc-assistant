@@ -32,6 +32,65 @@ export const generateSlotUtterances = (action, subject, slot) => {
   )(utterances)
 }
 
+export const generateDefinitions = (items, prefix = 'RCAssistant') => {
+  const { action, subject, slot } = items[0]
+  const intentUtterances = generateIntentUtterances(action, subject, slot)
+  const slotUtterances = generateSlotUtterances(action, subject, slot)
+  const intents = [
+    {
+      'name': 'RCAssistantBusinessHours',
+      'version': '1',
+      'fulfillmentActivity': {
+        'type': 'ReturnIntent'
+      },
+      'sampleUtterances': intentUtterances,
+      'slots': [
+        {
+          'sampleUtterances': slotUtterances,
+          'slotType': 'RCAssistantBusinessHoursTypes',
+          'slotTypeVersion': '1',
+          'slotConstraint': 'Required',
+          'valueElicitationPrompt': {
+            'messages': [
+              {
+                'contentType': 'PlainText',
+                'content': 'Would you like to view your **personal business hours** or the **company business hours**? '
+              }
+            ],
+            'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
+            'maxAttempts': 2
+          },
+          'priority': 1,
+          'name': 'HoursFor'
+        }
+      ]
+    }
+  ]
+  const slotTypes = [
+    {
+      'description': 'personal or company business hours',
+      'name': 'RCAssistantBusinessHoursTypes',
+      'version': '1',
+      'enumerationValues': [
+        {
+          'value': 'personal',
+          'synonyms': [
+            'my'
+          ]
+        },
+        {
+          'value': 'company',
+          'synonyms': [
+            'office', 'organization', 'institution', 'enterprise'
+          ]
+        }
+      ],
+      'valueSelectionStrategy': 'TOP_RESOLUTION'
+    }
+  ]
+  return { intents, slotTypes }
+}
+
 export const generateLex = (intents, slotTypes) => {
   return {
     'metadata': {
