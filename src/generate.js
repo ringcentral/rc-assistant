@@ -1,5 +1,4 @@
 import * as R from 'ramda'
-import pluralize from 'pluralize'
 import { pascalCase } from 'change-case'
 
 const actions = {
@@ -8,7 +7,6 @@ const actions = {
 }
 
 export const generateIntentUtterances = (action, subject, slotName) => {
-  subject = pluralize(subject)
   const utterances = []
   R.forEach(verb => {
     utterances.push(`${verb} ${subject}`)
@@ -18,8 +16,10 @@ export const generateIntentUtterances = (action, subject, slotName) => {
     }
   })(actions[action])
   if (action === 'view') {
-    utterances.unshift(`${subject} for {${slotName}}`)
-    utterances.unshift(`{${slotName}} ${subject}`)
+    if (slotName) {
+      utterances.unshift(`${subject} for {${slotName}}`)
+      utterances.unshift(`{${slotName}} ${subject}`)
+    }
     utterances.unshift(subject)
   }
   return utterances
@@ -34,51 +34,69 @@ export const generateSlotUtterances = (action, subject, slotName) => {
 }
 
 export const generateDefinitions = (prefix, items) => {
-  const { action, subject, slot } = items[0]
-  const intentUtterances = generateIntentUtterances(action, subject, slot.name)
-  const slotUtterances = generateSlotUtterances(action, subject, slot.name)
-  const intents = [
-    {
-      'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
-      'version': '1',
-      'fulfillmentActivity': {
-        'type': 'ReturnIntent'
-      },
-      'sampleUtterances': intentUtterances,
-      'slots': [
+  const intents = []
+  const slotTypes = []
+  items.forEach(item => {
+    const { action, subject, slot } = item
+    let intentUtterances
+    if (slot) {
+      intentUtterances = generateIntentUtterances(action, subject, slot.name)
+      const slotUtterances = generateSlotUtterances(action, subject, slot.name)
+      intents.push(
         {
-          'sampleUtterances': slotUtterances,
-          'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
-          'slotTypeVersion': '1',
-          'slotConstraint': 'Required',
-          'valueElicitationPrompt': {
-            'messages': [
-              {
-                'contentType': 'PlainText',
-                content: slot.options.map(synonyms => `**${synonyms[0]}** ${subject}`).join(' or ') + '?'
-              }
-            ],
-            'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
-            'maxAttempts': 2
+          'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
+          'version': '1',
+          'fulfillmentActivity': {
+            'type': 'ReturnIntent'
           },
-          'priority': 1,
-          'name': slot.name
+          'sampleUtterances': intentUtterances,
+          'slots': [
+            {
+              'sampleUtterances': slotUtterances,
+              'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
+              'slotTypeVersion': '1',
+              'slotConstraint': 'Required',
+              'valueElicitationPrompt': {
+                'messages': [
+                  {
+                    'contentType': 'PlainText',
+                    content: slot.options.map(synonyms => `**${synonyms[0]}** ${subject}`).join(' or ') + '?'
+                  }
+                ],
+                'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
+                'maxAttempts': 2
+              },
+              'priority': 1,
+              'name': slot.name
+            }
+          ]
         }
-      ]
+      )
+      slotTypes.push(
+        {
+          description: `${subject} ${slot.name}`,
+          name: `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
+          version: '1',
+          enumerationValues: slot.options.map(synonyms => ({
+            value: synonyms[0],
+            synonyms: R.tail(synonyms)
+          })),
+          valueSelectionStrategy: 'TOP_RESOLUTION'
+        }
+      )
+    } else {
+      intentUtterances = generateIntentUtterances(action, subject)
+      intents.push(
+        {
+          'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
+          'version': '1',
+          'fulfillmentActivity': {
+            'type': 'ReturnIntent'
+          },
+          'sampleUtterances': intentUtterances
+        })
     }
-  ]
-  const slotTypes = [
-    {
-      description: `${subject} ${slot.name}`,
-      name: `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
-      version: '1',
-      enumerationValues: slot.options.map(synonyms => ({
-        value: synonyms[0],
-        synonyms: R.tail(synonyms)
-      })),
-      valueSelectionStrategy: 'TOP_RESOLUTION'
-    }
-  ]
+  })
   return { intents, slotTypes }
 }
 

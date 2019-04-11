@@ -9,7 +9,7 @@
     "version": "1",
     "intents": [
       {
-        "name": "RCAssistantViewBusinessHour",
+        "name": "RCAssistantViewBusinessHours",
         "version": "1",
         "fulfillmentActivity": {
           "type": "ReturnIntent"
@@ -51,14 +51,14 @@
               "display {type} business hours",
               "display business hours for {type}"
             ],
-            "slotType": "RCAssistantBusinessHourType",
+            "slotType": "RCAssistantBusinessHoursType",
             "slotTypeVersion": "1",
             "slotConstraint": "Required",
             "valueElicitationPrompt": {
               "messages": [
                 {
                   "contentType": "PlainText",
-                  "content": "**personal** business hour or **company** business hour?"
+                  "content": "**personal** business hours or **company** business hours?"
                 }
               ],
               "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
@@ -68,12 +68,28 @@
             "name": "type"
           }
         ]
+      },
+      {
+        "name": "RCAssistantViewCallerId",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "caller ID",
+          "view caller ID",
+          "see caller ID",
+          "show caller ID",
+          "display caller ID",
+          "get caller ID",
+          "list caller ID"
+        ]
       }
     ],
     "slotTypes": [
       {
-        "description": "business hour type",
-        "name": "RCAssistantBusinessHourType",
+        "description": "business hours type",
+        "name": "RCAssistantBusinessHoursType",
         "version": "1",
         "enumerationValues": [
           {
