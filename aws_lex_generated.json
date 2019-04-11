@@ -58,7 +58,7 @@
               "messages": [
                 {
                   "contentType": "PlainText",
-                  "content": "Would you like to view your **personal business hours** or the **company business hours**? "
+                  "content": "**personal** business hour or **company** business hour?"
                 }
               ],
               "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
@@ -72,23 +72,26 @@
     ],
     "slotTypes": [
       {
-        "description": "personal or company business hours",
+        "description": "business hour type",
         "name": "RCAssistantBusinessHourType",
         "version": "1",
         "enumerationValues": [
           {
             "value": "personal",
             "synonyms": [
-              "my"
+              "my",
+              "for me",
+              "for myself"
             ]
           },
           {
             "value": "company",
             "synonyms": [
               "office",
+              "enterprise",
               "organization",
-              "institution",
-              "enterprise"
+              "institute",
+              "institution"
             ]
           }
         ],
