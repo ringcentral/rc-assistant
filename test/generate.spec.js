@@ -10,13 +10,13 @@ describe('generateIntentUtterances', () => {
     const slot = { name: 'type', preposition: 'for' }
     const utterances = generateIntentUtterances(action, subjects, slot)
     expect(utterances).toEqual([
-      'business hours', '{type} business hours', 'business hours for {type}',
-      'view business hours', 'view {type} business hours', 'view business hours for {type}',
-      'see business hours', 'see {type} business hours', 'see business hours for {type}',
-      'show business hours', 'show {type} business hours', 'show business hours for {type}',
-      'display business hours', 'display {type} business hours', 'display business hours for {type}',
-      'get business hours', 'get {type} business hours', 'get business hours for {type}',
-      'list business hours', 'list {type} business hours', 'list business hours for {type}'
+      'business hours', '{businessHoursType} business hours', 'business hours for {businessHoursType}',
+      'view business hours', 'view {businessHoursType} business hours', 'view business hours for {businessHoursType}',
+      'see business hours', 'see {businessHoursType} business hours', 'see business hours for {businessHoursType}',
+      'show business hours', 'show {businessHoursType} business hours', 'show business hours for {businessHoursType}',
+      'display business hours', 'display {businessHoursType} business hours', 'display business hours for {businessHoursType}',
+      'get business hours', 'get {businessHoursType} business hours', 'get business hours for {businessHoursType}',
+      'list business hours', 'list {businessHoursType} business hours', 'list business hours for {businessHoursType}'
     ])
   })
 })
@@ -28,11 +28,11 @@ describe('generateSlotUtterances', () => {
     const slot = { name: 'type', preposition: 'for' }
     const utterances = generateSlotUtterances(action, subjects, slot)
     expect(utterances).toEqual([
-      '{type} business hours', 'business hours for {type}',
-      'view {type} business hours', 'view business hours for {type}',
-      'see {type} business hours', 'see business hours for {type}',
-      'show {type} business hours', 'show business hours for {type}',
-      'display {type} business hours', 'display business hours for {type}'
+      '{businessHoursType} business hours', 'business hours for {businessHoursType}',
+      'view {businessHoursType} business hours', 'view business hours for {businessHoursType}',
+      'see {businessHoursType} business hours', 'see business hours for {businessHoursType}',
+      'show {businessHoursType} business hours', 'show business hours for {businessHoursType}',
+      'display {businessHoursType} business hours', 'display business hours for {businessHoursType}'
     ])
   })
 })

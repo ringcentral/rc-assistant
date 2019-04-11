@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { pascalCase } from 'change-case'
+import { pascalCase, camelCase } from 'change-case'
 
 const actions = {
   view: ['view', 'see', 'show', 'display', 'get', 'list'],
@@ -7,7 +7,10 @@ const actions = {
 }
 
 export const generateIntentUtterances = (action, subjects, slot) => {
-  const { name, preposition } = (slot || {})
+  let { name, preposition } = (slot || {})
+  if (name) {
+    name = `${camelCase(subjects[0])}${pascalCase(name)}`
+  }
   const utterances = []
   R.forEach(verb => {
     R.reverse(subjects).forEach(subject => {
@@ -33,7 +36,7 @@ export const generateIntentUtterances = (action, subjects, slot) => {
 export const generateSlotUtterances = (action, subjects, slot) => {
   const utterances = generateIntentUtterances(action, subjects, slot)
   return R.pipe(
-    R.filter(u => u.includes(`{${slot.name}}`)),
+    R.filter(u => u.includes(`${camelCase(subjects[0])}${pascalCase(slot.name)}`)),
     R.slice(0, 10)
   )(utterances)
 }
@@ -83,7 +86,7 @@ export const generateDefinitions = (prefix, items) => {
             'maxAttempts': 2
           },
           'priority': 1,
-          'name': slot.name
+          'name': `${camelCase(subject)}${pascalCase(slot.name)}`
         }
       ]
       slotTypes.push({
