@@ -6,27 +6,31 @@ const actions = {
   edit: ['edit', 'change', 'update', 'set', 'alter', 'modify']
 }
 
-export const generateIntentUtterances = (action, subject, slotName) => {
+export const generateIntentUtterances = (action, subjects, slotName) => {
   const utterances = []
   R.forEach(verb => {
-    utterances.push(`${verb} ${subject}`)
-    if (slotName) {
-      utterances.push(`${verb} {${slotName}} ${subject}`)
-      utterances.push(`${verb} ${subject} for {${slotName}}`)
-    }
+    R.reverse(subjects).forEach(subject => {
+      utterances.push(`${verb} ${subject}`)
+      if (slotName) {
+        utterances.push(`${verb} {${slotName}} ${subject}`)
+        utterances.push(`${verb} ${subject} for {${slotName}}`)
+      }
+    })
   })(actions[action])
-  if (action === 'view') {
-    if (slotName) {
-      utterances.unshift(`${subject} for {${slotName}}`)
-      utterances.unshift(`{${slotName}} ${subject}`)
+  R.reverse(subjects).forEach(subject => {
+    if (action === 'view') {
+      if (slotName) {
+        utterances.unshift(`${subject} for {${slotName}}`)
+        utterances.unshift(`{${slotName}} ${subject}`)
+      }
+      utterances.unshift(subject)
     }
-    utterances.unshift(subject)
-  }
+  })
   return utterances
 }
 
-export const generateSlotUtterances = (action, subject, slotName) => {
-  const utterances = generateIntentUtterances(action, subject, slotName)
+export const generateSlotUtterances = (action, subjects, slotName) => {
+  const utterances = generateIntentUtterances(action, subjects, slotName)
   return R.pipe(
     R.filter(u => u.includes(`{${slotName}}`)),
     R.slice(0, 10)
@@ -37,7 +41,8 @@ export const generateDefinitions = (prefix, items) => {
   const intents = []
   const slotTypes = []
   items.forEach(item => {
-    const { action, subject, slot } = item
+    const { action, subjects, slot } = item
+    const subject = subjects[0]
     intents.push({
       'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
       'version': '1',
@@ -46,12 +51,12 @@ export const generateDefinitions = (prefix, items) => {
       }
     })
     if (!slot) {
-      R.last(intents).sampleUtterances = generateIntentUtterances(action, subject)
+      R.last(intents).sampleUtterances = generateIntentUtterances(action, subjects)
     } else {
-      R.last(intents).sampleUtterances = generateIntentUtterances(action, subject, slot.name)
+      R.last(intents).sampleUtterances = generateIntentUtterances(action, subjects, slot.name)
       R.last(intents).slots = [
         {
-          'sampleUtterances': generateSlotUtterances(action, subject, slot.name),
+          'sampleUtterances': generateSlotUtterances(action, subjects, slot.name),
           'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
           'slotTypeVersion': '1',
           'slotConstraint': 'Required',

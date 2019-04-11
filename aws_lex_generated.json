@@ -77,11 +77,18 @@
         },
         "sampleUtterances": [
           "caller ID",
+          "callerID",
+          "view callerID",
           "view caller ID",
+          "see callerID",
           "see caller ID",
+          "show callerID",
           "show caller ID",
+          "display callerID",
           "display caller ID",
+          "get callerID",
           "get caller ID",
+          "list callerID",
           "list caller ID"
         ]
       }

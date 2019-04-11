@@ -6,17 +6,17 @@ import generate, { generateIntentUtterances, generateSlotUtterances } from '../s
 describe('generateIntentUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
-    const subject = 'business hours'
-    const slot = 'HoursFor'
-    const utterances = generateIntentUtterances(action, subject, slot)
+    const subjects = ['business hours']
+    const slot = 'type'
+    const utterances = generateIntentUtterances(action, subjects, slot)
     expect(utterances).toEqual([
-      'business hours', '{HoursFor} business hours', 'business hours for {HoursFor}',
-      'view business hours', 'view {HoursFor} business hours', 'view business hours for {HoursFor}',
-      'see business hours', 'see {HoursFor} business hours', 'see business hours for {HoursFor}',
-      'show business hours', 'show {HoursFor} business hours', 'show business hours for {HoursFor}',
-      'display business hours', 'display {HoursFor} business hours', 'display business hours for {HoursFor}',
-      'get business hours', 'get {HoursFor} business hours', 'get business hours for {HoursFor}',
-      'list business hours', 'list {HoursFor} business hours', 'list business hours for {HoursFor}'
+      'business hours', '{type} business hours', 'business hours for {type}',
+      'view business hours', 'view {type} business hours', 'view business hours for {type}',
+      'see business hours', 'see {type} business hours', 'see business hours for {type}',
+      'show business hours', 'show {type} business hours', 'show business hours for {type}',
+      'display business hours', 'display {type} business hours', 'display business hours for {type}',
+      'get business hours', 'get {type} business hours', 'get business hours for {type}',
+      'list business hours', 'list {type} business hours', 'list business hours for {type}'
     ])
   })
 })
@@ -24,15 +24,15 @@ describe('generateIntentUtterances', () => {
 describe('generateSlotUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
-    const subject = 'business hours'
-    const slot = 'HoursFor'
-    const utterances = generateSlotUtterances(action, subject, slot)
+    const subjects = ['business hours']
+    const slot = 'type'
+    const utterances = generateSlotUtterances(action, subjects, slot)
     expect(utterances).toEqual([
-      '{HoursFor} business hours', 'business hours for {HoursFor}',
-      'view {HoursFor} business hours', 'view business hours for {HoursFor}',
-      'see {HoursFor} business hours', 'see business hours for {HoursFor}',
-      'show {HoursFor} business hours', 'show business hours for {HoursFor}',
-      'display {HoursFor} business hours', 'display business hours for {HoursFor}'
+      '{type} business hours', 'business hours for {type}',
+      'view {type} business hours', 'view business hours for {type}',
+      'see {type} business hours', 'see business hours for {type}',
+      'show {type} business hours', 'show business hours for {type}',
+      'display {type} business hours', 'display business hours for {type}'
     ])
   })
 })
@@ -42,7 +42,7 @@ describe('generate whole file', () => {
     const lex = generate('RCAssistant', [
       {
         action: 'view',
-        subject: 'business hours',
+        subjects: ['business hours'],
         slot: {
           name: 'type',
           options: [
@@ -52,7 +52,7 @@ describe('generate whole file', () => {
       },
       {
         action: 'view',
-        subject: 'caller ID'
+        subjects: ['caller ID', 'callerID']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
