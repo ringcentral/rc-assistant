@@ -90,6 +90,10 @@ describe('generate whole file', () => {
       {
         action: 'hello',
         utterances: ['hello', 'hi', 'hey', 'hi there', 'good morning', 'good afternoon', 'good evening']
+      },
+      {
+        action: 'view',
+        subjects: ['presence info', 'presence information', 'do not disturb status', 'dnd status', 'user status', 'my status', 'status info', 'status information']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))
