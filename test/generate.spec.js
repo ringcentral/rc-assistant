@@ -47,7 +47,8 @@ describe('generate whole file', () => {
           name: 'type',
           options: [
             ['personal', 'my', 'for me', 'for myself'],
-            ['company', 'office', 'enterprise', 'organization', 'institute', 'institution']]
+            ['company', 'office', 'enterprise', 'organization', 'institute', 'institution']
+          ]
         }
       },
       {
@@ -61,6 +62,18 @@ describe('generate whole file', () => {
       {
         action: 'view',
         subjects: ['company greetings', 'company greeting']
+      },
+      {
+        action: 'view',
+        subjects: ['company info', 'company information', 'company details']
+      },
+      {
+        action: 'view',
+        subjects: ['company service plan', 'service plan for company']
+      },
+      {
+        action: 'view',
+        subjects: ['company time zone', 'company timezone', 'company time-zone']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))

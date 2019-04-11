@@ -151,6 +151,89 @@
           "list company greeting",
           "list company greetings"
         ]
+      },
+      {
+        "name": "RCAssistantViewCompanyInfo",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "company info",
+          "company information",
+          "company details",
+          "view company details",
+          "view company information",
+          "view company info",
+          "see company details",
+          "see company information",
+          "see company info",
+          "show company details",
+          "show company information",
+          "show company info",
+          "display company details",
+          "display company information",
+          "display company info",
+          "get company details",
+          "get company information",
+          "get company info",
+          "list company details",
+          "list company information",
+          "list company info"
+        ]
+      },
+      {
+        "name": "RCAssistantViewCompanyServicePlan",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "company service plan",
+          "service plan for company",
+          "view service plan for company",
+          "view company service plan",
+          "see service plan for company",
+          "see company service plan",
+          "show service plan for company",
+          "show company service plan",
+          "display service plan for company",
+          "display company service plan",
+          "get service plan for company",
+          "get company service plan",
+          "list service plan for company",
+          "list company service plan"
+        ]
+      },
+      {
+        "name": "RCAssistantViewCompanyTimeZone",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "company time zone",
+          "company timezone",
+          "company time-zone",
+          "view company time-zone",
+          "view company timezone",
+          "view company time zone",
+          "see company time-zone",
+          "see company timezone",
+          "see company time zone",
+          "show company time-zone",
+          "show company timezone",
+          "show company time zone",
+          "display company time-zone",
+          "display company timezone",
+          "display company time zone",
+          "get company time-zone",
+          "get company timezone",
+          "get company time zone",
+          "list company time-zone",
+          "list company timezone",
+          "list company time zone"
+        ]
       }
     ],
     "slotTypes": [
