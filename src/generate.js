@@ -38,63 +38,47 @@ export const generateDefinitions = (prefix, items) => {
   const slotTypes = []
   items.forEach(item => {
     const { action, subject, slot } = item
-    let intentUtterances
-    if (slot) {
-      intentUtterances = generateIntentUtterances(action, subject, slot.name)
-      const slotUtterances = generateSlotUtterances(action, subject, slot.name)
-      intents.push(
-        {
-          'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
-          'version': '1',
-          'fulfillmentActivity': {
-            'type': 'ReturnIntent'
-          },
-          'sampleUtterances': intentUtterances,
-          'slots': [
-            {
-              'sampleUtterances': slotUtterances,
-              'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
-              'slotTypeVersion': '1',
-              'slotConstraint': 'Required',
-              'valueElicitationPrompt': {
-                'messages': [
-                  {
-                    'contentType': 'PlainText',
-                    content: slot.options.map(synonyms => `**${synonyms[0]}** ${subject}`).join(' or ') + '?'
-                  }
-                ],
-                'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
-                'maxAttempts': 2
-              },
-              'priority': 1,
-              'name': slot.name
-            }
-          ]
-        }
-      )
-      slotTypes.push(
-        {
-          description: `${subject} ${slot.name}`,
-          name: `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
-          version: '1',
-          enumerationValues: slot.options.map(synonyms => ({
-            value: synonyms[0],
-            synonyms: R.tail(synonyms)
-          })),
-          valueSelectionStrategy: 'TOP_RESOLUTION'
-        }
-      )
+    intents.push({
+      'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
+      'version': '1',
+      'fulfillmentActivity': {
+        'type': 'ReturnIntent'
+      }
+    })
+    if (!slot) {
+      R.last(intents).sampleUtterances = generateIntentUtterances(action, subject)
     } else {
-      intentUtterances = generateIntentUtterances(action, subject)
-      intents.push(
+      R.last(intents).sampleUtterances = generateIntentUtterances(action, subject, slot.name)
+      R.last(intents).slots = [
         {
-          'name': `${prefix}${pascalCase(action)}${pascalCase(subject)}`,
-          'version': '1',
-          'fulfillmentActivity': {
-            'type': 'ReturnIntent'
+          'sampleUtterances': generateSlotUtterances(action, subject, slot.name),
+          'slotType': `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
+          'slotTypeVersion': '1',
+          'slotConstraint': 'Required',
+          'valueElicitationPrompt': {
+            'messages': [
+              {
+                'contentType': 'PlainText',
+                content: slot.options.map(synonyms => `**${synonyms[0]}** ${subject}`).join(' or ') + '?'
+              }
+            ],
+            'responseCard': '{"version":1,"contentType":"application/vnd.amazonaws.card.generic","genericAttachments":[]}',
+            'maxAttempts': 2
           },
-          'sampleUtterances': intentUtterances
-        })
+          'priority': 1,
+          'name': slot.name
+        }
+      ]
+      slotTypes.push({
+        description: `${subject} ${slot.name}`,
+        name: `${prefix}${pascalCase(subject)}${pascalCase(slot.name)}`,
+        version: '1',
+        enumerationValues: slot.options.map(synonyms => ({
+          value: synonyms[0],
+          synonyms: R.tail(synonyms)
+        })),
+        valueSelectionStrategy: 'TOP_RESOLUTION'
+      })
     }
   })
   return { intents, slotTypes }
