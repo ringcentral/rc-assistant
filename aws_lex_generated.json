@@ -91,6 +91,38 @@
           "list callerID",
           "list caller ID"
         ]
+      },
+      {
+        "name": "RCAssistantViewCompanyBillingPlan",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "company billing plan",
+          "view company billing plan",
+          "see company billing plan",
+          "show company billing plan",
+          "display company billing plan",
+          "get company billing plan",
+          "list company billing plan"
+        ]
+      },
+      {
+        "name": "RCAssistantViewCompanyGreetings",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "company greetings",
+          "view company greetings",
+          "see company greetings",
+          "show company greetings",
+          "display company greetings",
+          "get company greetings",
+          "list company greetings"
+        ]
       }
     ],
     "slotTypes": [
