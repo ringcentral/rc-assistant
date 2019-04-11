@@ -7,7 +7,7 @@ describe('generateIntentUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
     const subjects = ['business hours']
-    const slot = 'type'
+    const slot = { name: 'type', preposition: 'for' }
     const utterances = generateIntentUtterances(action, subjects, slot)
     expect(utterances).toEqual([
       'business hours', '{type} business hours', 'business hours for {type}',
@@ -25,7 +25,7 @@ describe('generateSlotUtterances', () => {
   test('view business hour', () => {
     const action = 'view'
     const subjects = ['business hours']
-    const slot = 'type'
+    const slot = { name: 'type', preposition: 'for' }
     const utterances = generateSlotUtterances(action, subjects, slot)
     expect(utterances).toEqual([
       '{type} business hours', 'business hours for {type}',
@@ -45,6 +45,7 @@ describe('generate whole file', () => {
         subjects: ['business hours', 'business hour'],
         slot: {
           name: 'type',
+          preposition: 'for',
           options: [
             ['personal', 'my', 'for me', 'for myself'],
             ['company', 'office', 'enterprise', 'organization', 'institute', 'institution']
@@ -74,6 +75,17 @@ describe('generate whole file', () => {
       {
         action: 'view',
         subjects: ['company time zone', 'company timezone', 'company time-zone']
+      },
+      {
+        action: 'view',
+        subjects: ['services'],
+        slot: {
+          name: 'status',
+          options: [
+            ['enabled', 'active', 'available', 'accessible'],
+            ['disabled', 'inactive', 'unavailable', 'inaccessible']
+          ]
+        }
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))

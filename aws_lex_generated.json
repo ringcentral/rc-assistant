@@ -234,6 +234,67 @@
           "list company timezone",
           "list company time zone"
         ]
+      },
+      {
+        "name": "RCAssistantViewServices",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "services",
+          "{status} services",
+          "services {status}",
+          "view services",
+          "view {status} services",
+          "view services {status}",
+          "see services",
+          "see {status} services",
+          "see services {status}",
+          "show services",
+          "show {status} services",
+          "show services {status}",
+          "display services",
+          "display {status} services",
+          "display services {status}",
+          "get services",
+          "get {status} services",
+          "get services {status}",
+          "list services",
+          "list {status} services",
+          "list services {status}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [
+              "{status} services",
+              "services {status}",
+              "view {status} services",
+              "view services {status}",
+              "see {status} services",
+              "see services {status}",
+              "show {status} services",
+              "show services {status}",
+              "display {status} services",
+              "display services {status}"
+            ],
+            "slotType": "RCAssistantServicesStatus",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "**enabled** services or **disabled** services?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "status"
+          }
+        ]
       }
     ],
     "slotTypes": [
@@ -258,6 +319,30 @@
               "organization",
               "institute",
               "institution"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "services status",
+        "name": "RCAssistantServicesStatus",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "enabled",
+            "synonyms": [
+              "active",
+              "available",
+              "accessible"
+            ]
+          },
+          {
+            "value": "disabled",
+            "synonyms": [
+              "inactive",
+              "unavailable",
+              "inaccessible"
             ]
           }
         ],
