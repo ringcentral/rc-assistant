@@ -121,6 +121,10 @@ describe('generate whole file', () => {
       {
         action: 'edit',
         subjects: ['caller ID', 'callerID', 'caller ID settings', 'callerID settings', 'caller ID information', 'callerID information', 'caller ID info', 'callerID info']
+      },
+      {
+        action: 'edit',
+        subjects: ['personal info', 'personal information', 'personal details']
       }
     ])
     fs.writeFileSync('aws_lex_generated.json', JSON.stringify(lex, null, 2))

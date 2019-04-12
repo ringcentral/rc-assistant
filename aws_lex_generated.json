@@ -626,6 +626,33 @@
           "modify callerID",
           "modify caller ID"
         ]
+      },
+      {
+        "name": "RCAssistantEditPersonalInfo",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "edit personal details",
+          "edit personal information",
+          "edit personal info",
+          "change personal details",
+          "change personal information",
+          "change personal info",
+          "update personal details",
+          "update personal information",
+          "update personal info",
+          "set personal details",
+          "set personal information",
+          "set personal info",
+          "alter personal details",
+          "alter personal information",
+          "alter personal info",
+          "modify personal details",
+          "modify personal information",
+          "modify personal info"
+        ]
       }
     ],
     "slotTypes": [
