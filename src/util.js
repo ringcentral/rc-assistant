@@ -27,3 +27,13 @@ export const sendAuthorizationLink = async (group, bot) => {
     text: `Please [click here](${authorizeUri}) to authorize me to access your RingCentral data.`
   })
 }
+
+export const cartesianProduct = (...arrays) => {
+  if (arrays.length === 1) {
+    return arrays[0]
+  }
+  return cartesianProduct(
+    R.xprod(arrays[0], arrays[1]).map(items => R.join(' ', items).trim()),
+    ...R.slice(2, Infinity, arrays)
+  )
+}

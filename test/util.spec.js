@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { toPairs, formatObj } from '../src/util'
+import { toPairs, formatObj, cartesianProduct } from '../src/util'
 
 describe('util', () => {
   test('toPairs', () => {
@@ -44,5 +44,14 @@ describe('util', () => {
       }
     })).toBe(`**contact firstName**: XM
 **contact businessAddress city**: San Mateo`)
+  })
+
+  test('cartesian product', () => {
+    expect(cartesianProduct([1, 2, 3], ['a', 'b', 'c'])).toEqual([
+      '1 a', '1 b', '1 c', '2 a', '2 b', '2 c', '3 a', '3 b', '3 c'
+    ])
+    expect(cartesianProduct([1, 2], ['a', 'b'], ['@', '#'])).toEqual([
+      '1 a @', '1 a #', '1 b @', '1 b #', '2 a @', '2 a #', '2 b @', '2 b #'
+    ])
   })
 })
