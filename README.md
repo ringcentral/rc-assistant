@@ -13,9 +13,7 @@
 
 ## Generate AWS Lex config
 
-```
-yarn generate
-```
+Ref: [AmazonLexGenerator](https://github.com/tylerlong/AmazonLexGenerator)
 
 
 ## Setup AWS Lex
