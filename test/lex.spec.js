@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import Lexruntime from 'aws-sdk/clients/lexruntime'
-import uuid from 'uuid/v1'
+import { v1 as uuid } from 'uuid'
 
 jest.setTimeout(64000)
 
