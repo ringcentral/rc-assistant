@@ -28,7 +28,7 @@
     "ngrok": "^4.0.1",
     "sequelize-cli": "^6.2.0",
     "serverless": "^2.51.2",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.0.3",
     "standard": "^16.0.3",
     "uuid": "^8.3.2",
     "yarn-upgrade-all": "^0.5.4"
